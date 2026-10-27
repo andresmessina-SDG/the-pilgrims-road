@@ -149,7 +149,8 @@ p{margin:0}
 .passport{margin-top:20px;display:grid;gap:14px}
 .pp-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .passport h3{font-family:var(--display);color:var(--gold);font-size:1.25rem;letter-spacing:.06em}
-.stamps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.stamps{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:10px}
+@media (min-width:900px){.stamps{grid-template-columns:repeat(11,minmax(0,1fr));gap:8px}.stamp .sl{font-size:.7rem}}
 .stamp{border:2px dashed var(--line);border-radius:14px;padding:10px 6px;text-align:center;display:grid;gap:4px;justify-items:center;min-width:0}
 .stamp .sl{font-family:var(--game);font-size:.75rem;color:var(--muted);overflow-wrap:anywhere;line-height:1.2}
 .stamp .ss{color:var(--gold-hi);letter-spacing:1px;font-size:.85rem;min-height:1.3em}
@@ -364,6 +365,63 @@ p{margin:0}
 .cert .rank{font-family:var(--game);font-weight:700;font-size:1.15rem;color:var(--gold-dark)}
 .certbadges{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
 
+/* Riddles */
+.riddle{display:grid;gap:16px}
+.clues{display:grid;gap:10px}
+.clue-c{display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:14px;background:linear-gradient(var(--ivory),#e8dcbf);color:var(--lapis);font-weight:800;font-size:1.08rem;box-shadow:0 4px 0 var(--gold-deep);animation:deal .35s cubic-bezier(.3,1.5,.6,1)}
+.clue-c .cn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-family:var(--game);font-weight:700}
+.clue-c.hidden{background:rgba(5,11,31,.5);color:var(--muted);border:2px dashed var(--line);font-weight:600;box-shadow:none;animation:none}
+.clue-c.hidden .cn{background:var(--lapis-3)}
+.rbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.bonusline{font-family:var(--game);font-weight:600;color:var(--gold-hi)}
+
+/* Memory */
+.mem{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.mc{perspective:800px;border:0;background:none;padding:0;height:108px;min-width:0}
+.mc-in{position:relative;display:block;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.mc.flip .mc-in{transform:rotateY(180deg)}
+.mc-f,.mc-b{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:grid;place-items:center;padding:8px;box-sizing:border-box}
+.mc-b{background:conic-gradient(var(--lapis-3) 25%,var(--lapis-2) 0 50%,var(--lapis-3) 0 75%,var(--lapis-2) 0) 0 0/16px 16px;border:3px solid var(--gold-deep);box-shadow:0 4px 0 var(--shadow)}
+.mc:hover:not(.flip) .mc-b{border-color:var(--gold-hi)}
+.mc-f{transform:rotateY(180deg);background:linear-gradient(var(--ivory),#e8dcbf);color:var(--lapis);font-weight:800;font-size:.9rem;text-align:center;line-height:1.2;border:3px solid var(--gold-deep)}
+.mc-f.term{background:linear-gradient(var(--gold-hi),var(--gold));font-family:var(--game);font-weight:700;font-size:1.05rem}
+.mc.matched .mc-f{border-color:var(--olive);box-shadow:0 0 0 3px var(--olive),0 0 18px rgba(147,185,86,.6)}
+
+/* Parchment (copyist + library) */
+.parch{background:linear-gradient(var(--ivory),#e8dcbf);color:var(--lapis);border-radius:16px;padding:24px;font-size:1.25rem;line-height:2.15;font-weight:700;box-shadow:0 8px 0 var(--gold-deep),0 14px 28px rgba(0,0,0,.3);animation:deal .4s cubic-bezier(.3,1.5,.6,1)}
+.wd{background:none;border:0;padding:1px 4px;border-radius:6px;font:inherit;color:inherit;cursor:pointer;transition:background .12s}
+.wd:hover:not(:disabled){background:rgba(34,57,110,.14)}
+.wd:disabled{cursor:default}
+.wd.caught{background:rgba(240,192,79,.55)}
+.wd.missed{background:rgba(212,85,63,.25)}
+.wd s{color:var(--red-dark);text-decoration-thickness:3px}
+.wd ins{text-decoration:none;color:var(--olive-dark);font-family:var(--game);font-weight:700}
+.wd.wrong{background:rgba(212,85,63,.35)!important;box-shadow:none!important;color:var(--red-dark)!important}
+.blank{min-width:84px;border:0;border-bottom:3px solid var(--lapis-3);background:rgba(34,57,110,.1);border-radius:8px 8px 0 0;padding:0 10px;font:inherit;font-family:var(--game);color:var(--lapis-3);cursor:pointer}
+.blank.cur{background:rgba(240,192,79,.55);border-color:var(--gold-dark);animation:hotglow 1.2s infinite}
+.blank.ok{color:var(--olive-dark);border-color:var(--olive-dark);background:rgba(147,185,86,.3);cursor:default;animation:popin .3s}
+.bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
+.wchip{font-family:var(--game);font-weight:600;font-size:1.08rem;padding:10px 18px;border-radius:12px;border:0;background:var(--lapis-3);box-shadow:0 5px 0 var(--shadow);transition:transform .08s,opacity .2s}
+.wchip:hover:not(:disabled){filter:brightness(1.2);transform:translateY(-2px)}
+.wchip:disabled{opacity:.2;cursor:default}
+
+/* Caravan runner */
+.runner{display:grid;gap:12px}
+.rhead{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.lamps{display:flex;gap:4px}
+.lamps svg{transition:opacity .3s,filter .3s}
+.lamps svg.off{opacity:.2;filter:grayscale(1)}
+.rprompt{font-family:var(--game);font-weight:600;font-size:clamp(1.25rem,3.8vw,1.75rem);text-align:center;min-height:2.6em;display:grid;place-items:center;line-height:1.2}
+.rboard{position:relative;height:400px;border-radius:16px;overflow:hidden;cursor:pointer;background:linear-gradient(90deg,#6f5534 0 4%,#a88553 4% 96%,#6f5534 96%);box-shadow:inset 0 30px 40px rgba(5,11,31,.55)}
+.rdiv{position:absolute;top:0;bottom:0;width:5px;margin-left:-2.5px;background:repeating-linear-gradient(#fff6dc 0 22px,transparent 22px 44px);opacity:.75;animation:roll .5s linear infinite}
+@keyframes roll{to{background-position:0 44px}}
+.rgates{position:absolute;left:4%;right:4%;top:0;height:64px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:0 6px;will-change:transform}
+.rsign{background:var(--lapis);color:var(--ivory);border:3px solid var(--gold);border-radius:12px;display:grid;place-items:center;font-family:var(--game);font-weight:600;font-size:1rem;text-align:center;padding:4px;line-height:1.1;box-shadow:0 6px 0 rgba(0,0,0,.45);min-width:0;overflow-wrap:anywhere}
+.rsign.ok{background:linear-gradient(#a6cc66,var(--olive));color:#16210a;border-color:var(--ivory)}
+.rsign.no{background:linear-gradient(#e2705b,var(--red));color:#fff}
+.rplayer{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);transition:left .14s ease-out;filter:drop-shadow(0 6px 3px rgba(0,0,0,.45))}
+.rctl{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
 @media (max-width:640px){
   .opts,.evs{grid-template-columns:1fr}
   .match{grid-template-columns:1fr}
@@ -373,6 +431,12 @@ p{margin:0}
   .slots{grid-template-columns:repeat(2,minmax(0,1fr))}
   .slots::before{display:none}
   .stamps{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .mc{height:86px}
+  .mc-f{font-size:.74rem!important;padding:5px!important}
+  .mc-f.term{font-size:.84rem!important}
+  .rboard{height:340px}
+  .rsign{font-size:.82rem}
+  .parch{font-size:1.05rem;padding:16px}
   .avatars{grid-template-columns:repeat(3,minmax(0,1fr))}
   .badges{grid-template-columns:repeat(2,minmax(0,1fr))}
   .stage{padding:16px}
@@ -410,7 +474,7 @@ p{margin:0}
 
 <script>
 /* ================= Content (from the Global Studies 7 handout) ================= */
-const ROMAN=['I','II','III','IV','V','VI'];
+const ROMAN=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI'];
 const PRAISE=['Well done!','Exactly right!','You got it!','Excellent!','Spot on!','Correct!','Brilliant!'];
 const ORIGINS=[
  {q:'What does the word <em>Christian</em> mean?',o:['Follower of Christ','Citizen of Rome','Teacher of the law','Person from Judea'],e:'A Christian is a “follower of Christ.” The faith is centered on Jesus Christ, the Son of God and Savior of the world.'},
@@ -480,26 +544,95 @@ const TF=[
  {s:'The Protestant Reformation began in the tenth century.',a:false,e:'It began in the sixteenth century, in 1517.'},
  {s:'Christians await Jesus’ return, the resurrection, and final judgment.',a:true,e:'This is the Christian future hope (Acts 1:11).'}
 ];
-const STATIONS=[
- {id:'origins',place:'Bethlehem',topic:'Where it began',title:'Where Did Christianity Begin?',instr:'Answer each question about the beginnings of Christianity. Keep a streak going to raise your combo.',run:b=>mcGame(ORIGINS,b),total:ORIGINS.length,dyk:'Christianity began in Judea, in the eastern Roman Empire, and spread from Jerusalem across the empire and eventually throughout the world.',limits:[0,2]},
- {id:'beliefs',place:'The Creed Hall',topic:'What Christians believe',title:'What Do Christians Believe?',instr:'Tap a belief, then tap the Bible verse that teaches it. Match all seven pairs.',run:b=>matchGame(b),total:BELIEFS.length,dyk:'Across its major historic branches, Christianity shares central teachings: the Trinity, creation, Jesus Christ, salvation by grace, the Bible, the Church, and the hope of Jesus’ return.',limits:[0,2]},
- {id:'branches',place:'The Three Roads',topic:'Branches of Christianity',title:'The Three Major Branches',instr:'Read each card and send it down the right road: Roman Catholic, Eastern Orthodox, or Protestant.',run:b=>sortGame(b),total:BRANCH_CARDS.length,dyk:'Christians share a common origin and many essential beliefs, but disagreements about church authority, worship, and certain doctrines led to distinct traditions.',limits:[1,3]},
- {id:'timeline',place:'The Road of Years',topic:'Historical timeline',title:'A Brief Historical Timeline',instr:'Round 1: put the events in order from earliest to latest. Round 2: match each event to its year.',run:b=>timelineGame(b),total:EVENTS.length*2,dyk:'AD 1054 is the traditional date associated with the Great Schism, when Eastern and Western Christianity divided.',limits:[0,2]},
- {id:'vocab',place:'The Scriptorium',topic:'Key vocabulary',title:'The Scriptorium',instr:'Read the clue, then tap the letter tiles to spell the word. A hint helps, but it counts as a mistake.',run:b=>vocabGame(b),total:VOCAB.length,dyk:'An apostle is a messenger sent by Christ, and the Gospel they carried means “good news.”',limits:[0,2]},
- {id:'trial',place:'The Great Gate',topic:'Final trial',title:'The Final Trial',instr:'Break the 10 seals on the Great Gate! True or false: you have 10 seconds for each statement. Answer fast for bonus points.',run:b=>lightningGame(b),total:10,dyk:'Churches and cathedrals are landmarks in many countries, and the faith is expressed today through many languages and local cultures.',limits:[1,3]}
+const RIDDLES=[
+ {a:'Jesus',g:'p',c:['I taught throughout Galilee and Judea.','I grew up in the town of Nazareth.','I was born in Bethlehem, and Christians believe I rose from the dead.'],e:'Jesus is the center of the Christian faith. Christians believe He is fully God and fully human.'},
+ {a:'Constantine',g:'p',c:['I was a ruler, not a preacher.','I was an emperor of Rome.','In AD 313, I made Christianity legal in the Roman Empire.'],e:'Emperor Constantine legalized Christianity in AD 313.'},
+ {a:'Martin Luther',g:'p',c:['I lived in the sixteenth century.','Something I did in 1517 caused a great stir.','My actions helped begin the Protestant Reformation.'],e:'Martin Luther’s actions in 1517 helped begin the Reformation.'},
+ {a:'The pope',g:'p',c:['I am a bishop.','My city is Rome.','I lead the Roman Catholic Church.'],e:'The pope, the bishop of Rome, leads the Roman Catholic Church.'},
+ {a:'The apostles',g:'p',c:['We were Jews, like Jesus.','Jesus sent us out as His messengers.','After Jesus rose and ascended, we preached the Gospel.'],e:'An apostle is a messenger sent by Christ.'},
+ {a:'The Holy Spirit',g:'p',c:['I am one of the three Persons of the one God.','I am named with the Father and the Son in Matthew 28:19.','At Pentecost, I empowered the early Church.'],e:'The Holy Spirit empowered the early Church at Pentecost (Acts 2).'},
+ {a:'Jerusalem',g:'l',c:['I am a city in Judea.','The apostles began preaching the Gospel here.','From here, Christianity spread across the Roman Empire.'],e:'Christianity spread from Jerusalem across the Roman Empire and eventually throughout the world.'},
+ {a:'The Bible',g:'t',c:['I have two main parts.','One of my parts is the Hebrew Scriptures.','Christians call me Holy Scripture: the Old and New Testaments.'],e:'The Bible teaches who God is and how His people should live (2 Timothy 3:16).'},
+ {a:'The Eastern Orthodox Churches',g:'t',c:['We are a family of self-governing churches.','The Greek and Russian churches are part of us.','We are known for icons and the Divine Liturgy.'],e:'The Orthodox churches emphasize ancient Christian worship and Holy Tradition.'},
+ {a:'Bethlehem',g:'l',c:['I am a small town in Judea.','The story of Jesus’ life on earth begins here.','Jesus was born here.'],e:'Jesus was born in Bethlehem and grew up in Nazareth.'}
 ];
-const LEVELS=[[0,'Wanderer'],[600,'Traveler'],[1500,'Seeker'],[3000,'Scholar'],[5000,'Scribe'],[7500,'Master Pilgrim']];
+const RIDDLE_GROUPS={p:['Jesus','Constantine','Martin Luther','The pope','The apostles','The Holy Spirit'],l:['Jerusalem','Bethlehem','Nazareth','Rome','Galilee'],t:['The Bible','The Eastern Orthodox Churches','The Protestant churches','The Roman Catholic Church','The Gospel']};
+const MEMORY=[
+ {a:'Gospel',b:'Good news about Jesus Christ'},
+ {a:'Apostle',b:'A messenger sent by Christ'},
+ {a:'Doctrine',b:'An official religious teaching'},
+ {a:'Trinity',b:'Father, Son, and Holy Spirit: one God'},
+ {a:'Pentecost',b:'The Holy Spirit empowers the early Church'},
+ {a:'Old Testament',b:'The Hebrew Scriptures'},
+ {a:'Divine Liturgy',b:'Eastern Orthodox worship'},
+ {a:'Mass',b:'Roman Catholic worship (Eucharist)'}
+];
+const ERRORS=[
+ {s:'Jesus was born in Rome, grew up in Nazareth, and taught in Galilee.',bad:'Rome',fix:'Bethlehem',e:'Jesus was born in Bethlehem.'},
+ {s:'Christianity began in the fifth century AD in Judea.',bad:'fifth',fix:'first',e:'Christianity began in the first century AD.'},
+ {s:'Roman Emperor Nero legalized Christianity in AD 313.',bad:'Nero',fix:'Constantine',e:'Emperor Constantine legalized Christianity in 313.'},
+ {s:'The Great Schism divided Northern and Western Christianity.',bad:'Northern',fix:'Eastern',e:'The Great Schism of 1054 divided Eastern and Western Christianity.'},
+ {s:'Protestants emphasize tradition as the final authority for Christian doctrine.',bad:'tradition',fix:'the Bible',e:'Protestants emphasize the Bible as the final authority.'},
+ {s:'The Roman Catholic Church has twelve sacraments.',bad:'twelve',fix:'seven',e:'The Roman Catholic Church has seven sacraments.'},
+ {s:'Salvation is a gift of God’s grace, not something people can borrow.',bad:'borrow',fix:'earn',e:'Salvation is a gift, not something people can earn (Ephesians 2:8–10).'},
+ {s:'The Holy Spirit empowered the early Church at Passover (Acts 2).',bad:'Passover',fix:'Pentecost',e:'The Holy Spirit empowered the early Church at Pentecost.'},
+ {s:'Christians accept the Hebrew Scriptures as the New Testament.',bad:'New',fix:'Old',e:'Christians accept the Hebrew Scriptures as the Old Testament.'},
+ {s:'Martin Luther’s actions in 1054 helped begin the Protestant Reformation.',bad:'1054',fix:'1517',e:'The Reformation began in 1517. The year 1054 is the Great Schism.'},
+ {s:'The word Christian means “teacher of Christ.”',bad:'teacher',fix:'follower',e:'Christian means “follower of Christ.”'},
+ {s:'Jesus and the first apostles were Romans.',bad:'Romans',fix:'Jews',e:'Christianity arose in a Jewish setting: Jesus and the first apostles were Jews.'}
+];
+const RUNNER=[
+ {q:'Jesus was born in…',o:['Bethlehem','Nazareth','Rome']},
+ {q:'Jesus grew up in…',o:['Nazareth','Athens','Bethlehem']},
+ {q:'Christianity began in…',o:['Judea','Greece','Egypt']},
+ {q:'Constantine legalized Christianity in AD…',o:['313','1054','1517']},
+ {q:'The Great Schism is dated to AD…',o:['1054','313','30']},
+ {q:'The Reformation began in AD…',o:['1517','1054','313']},
+ {q:'“Gospel” means…',o:['Good news','A prayer','A temple']},
+ {q:'An apostle is a…',o:['Messenger','King','Soldier']},
+ {q:'Led by the pope:',o:['Catholic','Orthodox','Protestant']},
+ {q:'Known for icons and the Divine Liturgy:',o:['Orthodox','Protestant','Catholic']},
+ {q:'Came from the Reformation:',o:['Protestant','Orthodox','Catholic']},
+ {q:'One God in…',o:['Three Persons','Two Persons','Seven Persons']},
+ {q:'The Holy Spirit empowered the Church at…',o:['Pentecost','Passover','Christmas']},
+ {q:'Salvation is a gift of…',o:['God’s grace','Good luck','Hard work']}
+];
+const CLOZE=[
+ {h:'Where it began',t:'Christianity began in the {first} century AD in {Judea}, a region of the eastern {Roman} Empire. Jesus was born in {Bethlehem} and grew up in {Nazareth}.',x:['fifth','Athens'],e:'His life, death, and resurrection are the foundation of the Christian faith.'},
+ {h:'What Christians believe',t:'Christians worship one God in three Persons, called the {Trinity}. Salvation is a gift of God’s {grace}, not something people can {earn}. Christians practice {baptism} and the Lord’s {Supper}.',x:['buy','Liturgy'],e:'Christians also await Jesus’ return, the resurrection, and final judgment.'},
+ {h:'The branches',t:'The Roman Catholic Church is led by the {pope}. The Eastern {Orthodox} Churches are known for {icons} and the Divine Liturgy. {Protestant} churches came from the sixteenth-century {Reformation}.',x:['Schism','emperor'],e:'Lutheran, Reformed, Anglican, Baptist, Methodist, and Pentecostal churches are all Protestant traditions.'},
+ {h:'Christianity and world culture',t:'Christianity has influenced art, {music}, architecture, laws, and even {calendars}. Today, Christians live on every inhabited {continent}.',x:['planet','sports'],e:'The faith is expressed through many languages and local cultures.'}
+];
+const STATIONS=[
+ {id:'origins',lm:'bethlehem',place:'Bethlehem',topic:'Where it began',title:'Where Did Christianity Begin?',instr:'Answer each question about the beginnings of Christianity. Keep a streak going to raise your combo.',run:b=>mcGame(ORIGINS,b),total:ORIGINS.length,dyk:'Christianity began in Judea, in the eastern Roman Empire, and spread from Jerusalem across the empire and eventually throughout the world.',limits:[0,2]},
+ {id:'galilee',lm:'galilee',place:'Galilee',topic:'Who am I? riddles',title:'Who Am I?',instr:'Read the clues and guess who or what is speaking. Answer on the first clue for a big bonus, or reveal more clues if you need them.',run:b=>riddleGame(b),total:RIDDLES.length,dyk:'Jesus taught throughout Galilee and Judea, and His first apostles were Jews.',limits:[1,3]},
+ {id:'beliefs',lm:'hall',place:'The Creed Hall',topic:'What Christians believe',title:'What Do Christians Believe?',instr:'Tap a belief, then tap the Bible verse that teaches it. Match all seven pairs.',run:b=>matchGame(b),total:BELIEFS.length,dyk:'Across its major historic branches, Christianity shares central teachings: the Trinity, creation, Jesus Christ, salvation by grace, the Bible, the Church, and the hope of Jesus’ return.',limits:[0,2]},
+ {id:'lamps',lm:'lamps',place:'The Lamp Room',topic:'Memory match',title:'The Lamp Room',instr:'Flip the cards two at a time to match each word with its meaning. Try to remember where every card is!',run:b=>memoryGame(b),total:MEMORY.length,dyk:'The Church is both Christ’s people and the place where they gather.',limits:[6,10]},
+ {id:'branches',lm:'roads',place:'The Three Roads',topic:'Branches of Christianity',title:'The Three Major Branches',instr:'Read each card and send it down the right road: Roman Catholic, Eastern Orthodox, or Protestant.',run:b=>sortGame(b),total:BRANCH_CARDS.length,dyk:'Christians share a common origin and many essential beliefs, but disagreements about church authority, worship, and certain doctrines led to distinct traditions.',limits:[1,3]},
+ {id:'caravan',lm:'caravan',place:'The Caravan Road',topic:'Arcade review run',title:'The Caravan Road',instr:'Steer your token into the lane with the right answer before the gate reaches you. You have 3 lamps, and each wrong gate puts one out.',run:b=>runnerGame(b),total:12,dyk:'Christians today live on every inhabited continent.',limits:[0,1]},
+ {id:'timeline',lm:'years',place:'The Road of Years',topic:'Historical timeline',title:'A Brief Historical Timeline',instr:'Round 1: put the events in order from earliest to latest. Round 2: match each event to its year.',run:b=>timelineGame(b),total:EVENTS.length*2,dyk:'AD 1054 is the traditional date associated with the Great Schism, when Eastern and Western Christianity divided.',limits:[0,2]},
+ {id:'copyist',lm:'copyist',place:'The Copyist’s Desk',topic:'Spot the mistake',title:'The Copyist’s Desk',instr:'A careless copyist made one mistake in each sentence. Tap the wrong word to fix the scroll.',run:b=>errorGame(b),total:10,dyk:'Christianity has influenced literature and education, as well as art, music, and architecture.',limits:[1,3]},
+ {id:'vocab',lm:'scriptorium',place:'The Scriptorium',topic:'Key vocabulary',title:'The Scriptorium',instr:'Read the clue, then tap the letter tiles to spell the word. A hint helps, but it counts as a mistake.',run:b=>vocabGame(b),total:VOCAB.length,dyk:'An apostle is a messenger sent by Christ, and the Gospel they carried means “good news.”',limits:[0,2]},
+ {id:'library',lm:'library',place:'The Scroll Library',topic:'Fill in the scroll',title:'The Scroll Library',instr:'Some words have faded from the old scrolls. Tap a blank, then tap the word that belongs there.',run:b=>clozeGame(b),total:18,dyk:'Christianity has influenced charitable work, laws, and calendars around the world.',limits:[1,3]},
+ {id:'trial',lm:'gate',place:'The Great Gate',topic:'Final trial',title:'The Final Trial',instr:'Break the 10 seals on the Great Gate! True or false: you have 10 seconds for each statement. Answer fast for bonus points.',run:b=>lightningGame(b),total:10,dyk:'Churches and cathedrals are landmarks in many countries, and the faith is expressed today through many languages and local cultures.',limits:[1,3]}
+];
+const LEVELS=[[0,'Wanderer'],[800,'Traveler'],[2000,'Seeker'],[4000,'Scholar'],[6500,'Scribe'],[9500,'Lamp Keeper'],[13000,'Master Pilgrim']];
 const AVATARS=[{id:'fish',n:'Fish',c:'#3d7bd9'},{id:'star',n:'Star',c:'#d4553f'},{id:'anchor',n:'Anchor',c:'#2f8f83'},{id:'lamp',n:'Lamp',c:'#c7862a'},{id:'crown',n:'Crown',c:'#8a4fc2'},{id:'shield',n:'Shield',c:'#4f8a3a'}];
 const BADGES=[
  {id:'first',n:'First Steps',d:'Finish your first station',ic:'path'},
  {id:'perfect',n:'Flawless',d:'Earn 3 stars at any station',ic:'star'},
  {id:'streak5',n:'On Fire',d:'Get 5 right in a row',ic:'flame'},
  {id:'streak10',n:'Unstoppable',d:'Get 10 right in a row',ic:'flame'},
+ {id:'riddle',n:'Riddle Master',d:'Solve 5 riddles on the first clue',ic:'boat'},
+ {id:'memory',n:'Memory Keeper',d:'Clear the Lamp Room with 6 or fewer misses',ic:'lamp'},
+ {id:'runner',n:'Road Runner',d:'Finish the Caravan Road with all 3 lamps lit',ic:'lanes'},
+ {id:'eyes',n:'Sharp Eyes',d:'Catch every copyist mistake with no wrong taps',ic:'eye'},
  {id:'nohint',n:'Master Scribe',d:'Finish the Scriptorium with no hints',ic:'book'},
+ {id:'librarian',n:'Librarian',d:'Restore every scroll with no mistakes',ic:'scroll'},
  {id:'speed',n:'Quick Draw',d:'Answer correctly in the Trial in under 2 seconds',ic:'bolt'},
  {id:'gate',n:'Gate Breaker',d:'Break all the seals on the Great Gate',ic:'gate'},
- {id:'all',n:'Whole Road',d:'Complete all six stations',ic:'shield'},
- {id:'allstars',n:'Golden Road',d:'Earn all 18 stars',ic:'crown'}
+ {id:'all',n:'Whole Road',d:'Complete all eleven stations',ic:'shield'},
+ {id:'allstars',n:'Golden Road',d:'Earn all 33 stars',ic:'crown'}
 ];
 
 /* ================= Art helpers ================= */
@@ -515,21 +648,30 @@ const GLYPH={
  flame:'<path d="M20 6C23 12 29 14 29 22C29 28 25 33 20 33C15 33 11 28 11 22C11 17 14 14 16 11C17 15 18 17 20 17C19 13 19 9 20 6Z" fill="#fff" stroke="none"/>',
  book:'<path d="M20 13C16 10 11 10 8 11V29C11 28 16 28 20 31C24 28 29 28 32 29V11C29 10 24 10 20 13ZM20 13V31"/>',
  bolt:'<path d="M22 6L11 22H19L17 34L29 17H21Z" fill="#fff" stroke="none"/>',
- gate:'<path d="M10 32V18C10 7 30 7 30 18V32ZM20 10V32M8 32H32"/>'
+ gate:'<path d="M10 32V18C10 7 30 7 30 18V32ZM20 10V32M8 32H32"/>',
+ eye:'<path d="M5 20C10 12 30 12 35 20C30 28 10 28 5 20Z"/><circle cx="20" cy="20" r="4.5" fill="#fff"/>',
+ boat:'<path d="M7 24H33L28 31H12Z" fill="#fff" stroke="none"/><path d="M20 24V8"/><path d="M22 10L30 22H22Z" fill="#fff" stroke="none"/>',
+ scroll:'<path d="M10 10H28C31 10 31 15 28 15H13V29C13 32 8 32 8 29V12C8 10 10 10 10 10ZM13 29H30C33 29 33 24 30 24V15"/>',
+ lanes:'<path d="M15 8L8 32M25 8L32 32"/><path d="M20 8V32" stroke-dasharray="3 4"/>'
 };
 function tokenInner(id){const a=AVATARS.find(x=>x.id===id)||AVATARS[0];return `<circle cx="20" cy="20" r="18.5" fill="${a.c}" stroke="#f6eedb" stroke-width="2.5"/><circle cx="20" cy="20" r="15" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1"/><g fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${GLYPH[a.id]}</g>`}
 function token(id,size=40){return `<svg viewBox="0 0 40 40" width="${size}" height="${size}" aria-hidden="true">${tokenInner(id)}</svg>`}
 function badgeIcon(b,on,size=44){return `<svg viewBox="0 0 40 40" width="${size}" height="${size}" aria-hidden="true"><path d="M13 30L10 39L16 36L20 39L22 31Z M27 30L30 39L24 36L20 39L18 31Z" fill="${on?'#d4553f':'#3a4566'}"/><circle cx="20" cy="18" r="16" fill="${on?'#b8862a':'#2a3658'}" stroke="${on?'#ffe08a':'#4a5675'}" stroke-width="2"/><g transform="translate(20 18) scale(.62) translate(-20 -20)" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="${on?1:.45}">${GLYPH[b.ic]}</g></svg>`}
-const LANDMARK=[
- `<path d="${starPath(0,-8,10,3.6,8)}" fill="currentColor" stroke="none"/><path d="M-17 17V9L-11 4L-5 9V17M-3 17V7L4 1L11 7V17M-19 17H19"/>`,
- `<path d="M-17 -5L0 -15L17 -5Z" fill="currentColor"/><path d="M-12 -1V12M-4 -1V12M4 -1V12M12 -1V12M-18 15H18"/>`,
- `<path d="M0 -16V17M-8 17H8"/><path d="M1 -14H13L17 -10.5L13 -7H1ZM-1 -4H-13L-17 -0.5L-13 3H-1ZM1 6H11L14.5 9.5L11 13H1Z" fill="currentColor" stroke="none"/>`,
- `<path d="M-11 -15H11M-11 15H11M-8 -15C-8 -6 -2 -3 -1.5 0C-2 3 -8 6 -8 15M8 -15C8 -6 2 -3 1.5 0C2 3 8 6 8 15"/><path d="M-5 -10H5L0 -3ZM-6 13C-3 8 3 8 6 13Z" fill="currentColor" stroke="none"/>`,
- `<path d="M0 -4C-5 -8 -12 -8 -17 -6V12C-12 10 -5 10 0 14C5 10 12 10 17 12V-6C12 -8 5 -8 0 -4ZM0 -4V14"/><path d="M6 -10L16 -20" /><path d="M16 -20C12 -19 9 -16 8 -12L11 -13Z" fill="currentColor"/>`,
- `<path d="M-15 17V-1C-15 -13 15 -13 15 -1V17Z"/><path d="M0 -10V17M-18 17H18"/><circle cx="-4" cy="5" r="1.6" fill="currentColor"/><circle cx="4" cy="5" r="1.6" fill="currentColor"/>`
-];
+const LM={
+ bethlehem:`<path d="${starPath(0,-8,10,3.6,8)}" fill="currentColor" stroke="none"/><path d="M-17 17V9L-11 4L-5 9V17M-3 17V7L4 1L11 7V17M-19 17H19"/>`,
+ galilee:`<path d="M-17 4H17L11 13H-11Z" fill="currentColor" stroke="none"/><path d="M0 4V-17"/><path d="M2 -15L14 1H2Z" fill="currentColor" stroke="none"/><path d="M-19 18C-15 16 -11 20 -7 18C-3 16 1 20 5 18C9 16 13 20 17 18"/>`,
+ hall:`<path d="M-17 -5L0 -15L17 -5Z" fill="currentColor"/><path d="M-12 -1V12M-4 -1V12M4 -1V12M12 -1V12M-18 15H18"/>`,
+ lamps:`<path d="M-17 6C-17 0 -9 -3 1 -3H11C16 -3 18 0 15 3L11 6Z" fill="currentColor" stroke="none"/><path d="M-10 11H6M-2 6V11"/><path d="M13 -6C10 -11 13 -15 14 -18C17 -14 18 -10 13 -6Z" fill="currentColor" stroke="none"/>`,
+ roads:`<path d="M0 -16V17M-8 17H8"/><path d="M1 -14H13L17 -10.5L13 -7H1ZM-1 -4H-13L-17 -0.5L-13 3H-1ZM1 6H11L14.5 9.5L11 13H1Z" fill="currentColor" stroke="none"/>`,
+ caravan:`<path d="M-6 -16L-17 17M6 -16L17 17"/><path d="M0 -16V17" stroke-dasharray="4 4"/><circle cx="-8" cy="9" r="4.5" fill="currentColor" stroke="none"/>`,
+ years:`<path d="M-11 -15H11M-11 15H11M-8 -15C-8 -6 -2 -3 -1.5 0C-2 3 -8 6 -8 15M8 -15C8 -6 2 -3 1.5 0C2 3 8 6 8 15"/><path d="M-5 -10H5L0 -3ZM-6 13C-3 8 3 8 6 13Z" fill="currentColor" stroke="none"/>`,
+ copyist:`<circle cx="-4" cy="-4" r="11"/><path d="M4 4L16 16" stroke-width="4.5"/><path d="M-10 -6H2M-10 -1H-2"/>`,
+ scriptorium:`<path d="M0 -4C-5 -8 -12 -8 -17 -6V12C-12 10 -5 10 0 14C5 10 12 10 17 12V-6C12 -8 5 -8 0 -4ZM0 -4V14"/><path d="M6 -10L16 -20"/><path d="M16 -20C12 -19 9 -16 8 -12L11 -13Z" fill="currentColor"/>`,
+ library:`<path d="M-14 -13H12C16 -13 16 -6 12 -6H-10V11C-10 15 -17 15 -17 11V-10C-17 -13 -14 -13 -14 -13ZM-10 11H14C18 11 18 4 14 4V-6"/><path d="M-5 -1H8M-5 4H5"/>`,
+ gate:`<path d="M-15 17V-1C-15 -13 15 -13 15 -1V17Z"/><path d="M0 -10V17M-18 17H18"/><circle cx="-4" cy="5" r="1.6" fill="currentColor"/><circle cx="4" cy="5" r="1.6" fill="currentColor"/>`
+};
 const LOCK=`<rect x="-9" y="-2" width="18" height="15" rx="3" fill="currentColor" stroke="none"/><path d="M-5.5 -2V-7C-5.5 -12 5.5 -12 5.5 -7V-2"/>`;
-function medallion(i,size=84,done=false){return `<svg viewBox="-44 -44 88 88" width="${size}" height="${size}" aria-hidden="true"><circle r="42" fill="#b8862a" stroke="#f0c04f" stroke-width="3" stroke-dasharray="6 3"/><circle r="35" fill="${done?'#f0c04f':'#22396e'}" stroke="#6e4d12" stroke-width="2"/><g fill="none" stroke="${done?'#0f1d3d':'#f6eedb'}" color="${done?'#0f1d3d':'#f6eedb'}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${LANDMARK[i]}</g></svg>`}
+function medallion(i,size=84,done=false){return `<svg viewBox="-44 -44 88 88" width="${size}" height="${size}" aria-hidden="true"><circle r="42" fill="#b8862a" stroke="#f0c04f" stroke-width="3" stroke-dasharray="6 3"/><circle r="35" fill="${done?'#f0c04f':'#22396e'}" stroke="#6e4d12" stroke-width="2"/><g fill="none" stroke="${done?'#0f1d3d':'#f6eedb'}" color="${done?'#0f1d3d':'#f6eedb'}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${LM[STATIONS[i].lm]}</g></svg>`}
 function starSvg(on){return `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="${starPath(20,21,18,8,5)}" fill="${on?'#ffe08a':'#2a3658'}" stroke="${on?'#b8862a':'#4a5675'}" stroke-width="2.5" stroke-linejoin="round"/></svg>`}
 
 /* ================= State ================= */
@@ -539,10 +681,10 @@ const KEY='pilgrims-road-v2';
 function load(){try{return JSON.parse(localStorage.getItem(KEY)||localStorage.getItem('pilgrims-road-v1')||'null')}catch(e){return null}}
 let S=Object.assign({name:'',avatar:'fish',best:{},stars:{},badges:{},streak:0,maxLevel:0,unlockAll:false,sound:true},load()||{});
 if(!S.badges)S.badges={};if(!S.avatar)S.avatar='fish';
-if(typeof S.maxLevel!=='number'){S.maxLevel=0;for(const k in S.best)S.maxLevel+=S.best[k];S.maxLevel=[0,600,1500,3000,5000,7500].filter(t=>S.maxLevel>=t).length-1}
+if(typeof S.maxLevel!=='number'){S.maxLevel=0;for(const k in S.best)S.maxLevel+=S.best[k];S.maxLevel=LEVELS.map(x=>x[0]).filter(t=>S.maxLevel>=t).length-1}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-let RUN=null,TIMERS=[],TOK_AT=null,DONE_AT=null;
-function stopTimers(){TIMERS.forEach(clearInterval);TIMERS=[]}
+let RUN=null,TIMERS=[],TOK_AT=null,DONE_AT=null,GEN=0,KEYH=null;
+function stopTimers(){TIMERS.forEach(clearInterval);TIMERS=[];GEN++;if(KEYH){document.removeEventListener('keydown',KEYH);KEYH=null}}
 const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -668,14 +810,14 @@ function renderTitle(){
     </svg>
     <p class="eyebrow">Global Studies 7 · World Religions &amp; Cultures</p>
     <h1 class="big">The Pilgrim’s Road</h1>
-    <p class="lede">Travel six stations from Bethlehem to the Great Gate. Learn the story, beliefs, branches, and history of Christianity, collect stars and badges, and level up to Master Pilgrim.</p>
+    <p class="lede">Travel eleven stations from Bethlehem to the Great Gate. Learn the story, beliefs, branches, and history of Christianity, collect stars and badges, and level up to Master Pilgrim.</p>
     <form class="panel start-panel" id="startForm">
       <div style="display:grid;gap:8px"><label class="flabel" for="pname">Your name</label>
       <input type="text" id="pname" maxlength="24" autocomplete="off" placeholder="Type your first name" value="${esc(S.name)}"></div>
       <fieldset style="border:0;padding:0;margin:0;display:grid;gap:8px"><legend class="flabel" style="padding:0;margin-bottom:8px">Choose your pilgrim token</legend>
       <div class="avatars">${AVATARS.map(a=>`<label class="av"><input type="radio" name="av" id="av-${a.id}" value="${a.id}" ${S.avatar===a.id?'checked':''}>${token(a.id,52)}<span>${a.n}</span></label>`).join('')}</div></fieldset>
       <ul class="how">
-        <li>${token('star',18)}<span>Six stations, six kinds of challenge: quiz, matching, sorting, timeline, word tiles, and a boss gate.</span></li>
+        <li>${token('star',18)}<span>Eleven stations: quizzes, riddles, memory cards, an arcade road, word puzzles, and a boss gate.</span></li>
         <li>${token('lamp',18)}<span>Answer right in a row to grow your combo up to ×4 points.</span></li>
         <li>${token('crown',18)}<span>Fewer mistakes earn more stars. Open a treasure chest after every station.</span></li>
       </ul>
@@ -691,19 +833,19 @@ function renderTitle(){
 function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 function hill(W,H,base,amp,seed){const R=rng(seed);const p1=R()*6,p2=R()*6,f1=1.4+R()*2,f2=3+R()*3;let d=`M0 ${H} L0 ${base}`;
   for(let x=0;x<=W;x+=W/40){const y=base+Math.sin(x/W*Math.PI*f1+p1)*amp+Math.sin(x/W*Math.PI*f2+p2)*amp*.4;d+=` L${x.toFixed(1)} ${y.toFixed(1)}`}return d+` L${W} ${H} Z`}
-function unlocked(i){return S.unlockAll||i===0||!!S.stars[STATIONS[i-1].id]}
+function unlocked(i){return S.unlockAll||i===0||!!S.stars[STATIONS[i-1].id]||!!S.stars[STATIONS[i].id]}
 function renderMap(){
   stopTimers();RUN=null;screen.dataset.view='map';$('#hud').hidden=false;hud();
   const narrow=innerWidth<640;lastNarrow=narrow;
-  const W=narrow?400:1000,H=narrow?880:600;
-  const P=narrow?[[105,110],[295,240],[105,370],[295,500],[105,630],[290,770]]:[[115,440],[275,215],[445,420],[610,200],[775,415],[900,205]];
+  const W=narrow?400:1000,H=narrow?1530:830;
+  const P=narrow?STATIONS.map((_,k)=>[k%2?295:105,110+k*130]):[[110,300],[270,120],[440,290],[610,110],[780,280],[910,470],[760,650],[590,470],[420,650],[250,470],[110,700]];
   let d=`M ${P[0][0]} ${P[0][1]}`;
   for(let i=1;i<P.length;i++){const a=P[i-1],b=P[i];
     d+=narrow?` C ${a[0]} ${(a[1]+b[1])/2}, ${b[0]} ${(a[1]+b[1])/2}, ${b[0]} ${b[1]}`:` C ${(a[0]+b[0])/2} ${a[1]}, ${(a[0]+b[0])/2} ${b[1]}, ${b[0]} ${b[1]}`}
   const R=rng(7);
-  const sky=Array.from({length:narrow?55:80},(_,k)=>{const x=R()*W,y=R()*H*(narrow?.3:.38),r=.6+R()*1.6;return `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(1)}" fill="#f6eedb" ${k%3?'':`class="twinkle" style="animation-delay:${(R()*3).toFixed(1)}s"`}/>`}).join('');
-  const hills=[['#16305e',.36],['#132a52',.52],['#102446',.68],['#0d1d3b',.84]].map((h,k)=>`<path d="${hill(W,H,H*h[1],narrow?18:26,11+k*5)}" fill="${h[0]}"/>`).join('');
-  const trees=Array.from({length:narrow?16:22},()=>{const x=R()*W,y=H*(.45+R()*.5),s=.7+R()*.6;if(P.some(p=>Math.hypot(p[0]-x,p[1]-y)<90))return '';
+  const sky=Array.from({length:narrow?70:90},(_,k)=>{const x=R()*W,y=R()*H*(narrow?.1:.28),r=.6+R()*1.6;return `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(1)}" fill="#f6eedb" ${k%3?'':`class="twinkle" style="animation-delay:${(R()*3).toFixed(1)}s"`}/>`}).join('');
+  const hills=(narrow?[['#16305e',.12],['#132a52',.36],['#102446',.6],['#0d1d3b',.82]]:[['#16305e',.3],['#132a52',.5],['#102446',.68],['#0d1d3b',.86]]).map((h,k)=>`<path d="${hill(W,H,H*h[1],narrow?18:26,11+k*5)}" fill="${h[0]}"/>`).join('');
+  const trees=Array.from({length:narrow?40:34},()=>{const x=R()*W,y=H*(.45+R()*.5),s=.7+R()*.6;if(P.some(p=>Math.hypot(p[0]-x,p[1]-y)<90))return '';
     return `<g transform="translate(${x.toFixed(0)} ${y.toFixed(0)}) scale(${s.toFixed(2)})"><path d="M0 0V14" stroke="#3a2d1c" stroke-width="3"/><ellipse cx="0" cy="-4" rx="11" ry="9" fill="#2c4a3b"/><ellipse cx="-4" cy="-7" rx="6" ry="5" fill="#3b5f45"/></g>`}).join('');
   const moon=narrow?[345,48]:[70,72];
   const doneN=STATIONS.filter(s=>S.stars[s.id]).length;
@@ -713,7 +855,7 @@ function renderMap(){
     return `<g transform="translate(${x} ${y})"><g class="${cls}" data-i="${i}" role="button" tabindex="${lk?-1:0}" aria-label="Station ${ROMAN[i]}: ${s.place}, ${s.topic}${lk?' (locked)':st?`, ${st} of 3 stars`:''}">
       <circle class="halo" r="52"/>
       <circle class="rim" r="40"/><circle class="medal" r="33"/>
-      <g class="lm" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${lk?LOCK:LANDMARK[i]}</g>
+      <g class="lm" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${lk?LOCK:LM[s.lm]}</g>
       <g transform="translate(29 -29)"><circle class="numb" r="12"/><text class="numt">${ROMAN[i]}</text></g>
       ${[-17,0,17].map((sx,k)=>`<path class="sstar ${k<st?'on':''}" d="${starPath(sx,52,8,3.4,5)}"/>`).join('')}
       <rect class="plaque" x="-86" y="64" width="172" height="42" rx="10"/>
@@ -722,7 +864,7 @@ function renderMap(){
   const allDone=doneN===STATIONS.length;
   screen.innerHTML=`
   <section class="map-head">
-    <div><p class="eyebrow">${esc(S.name||'Pilgrim')}’s journey · ${doneN} of 6 stations</p>
+    <div><p class="eyebrow">${esc(S.name||'Pilgrim')}’s journey · ${doneN} of ${STATIONS.length} stations</p>
     <h2>${allDone?'The road is complete!':doneN?'Onward, pilgrim!':'Your journey begins'}</h2>
     <p>${allDone?'Claim your Pilgrim’s Seal, or replay stations to earn every star.':'Tap the glowing medallion to enter the next station.'}</p></div>
     ${nextI>=0?`<button class="btn primary" id="goNext">Play Station ${ROMAN[nextI]}</button>`:allDone?`<button class="btn primary" id="sealTop">Claim your Seal</button>`:''}
@@ -761,9 +903,9 @@ function renderMap(){
   const road=$('#road'),T=road.getTotalLength(),N=500,samples=[];
   for(let k=0;k<=N;k++){const l=T*k/N,q=road.getPointAtLength(l);samples.push([l,q.x,q.y])}
   const L=P.map(([x,y])=>{let best=0,bd=1e12;for(const [l,px,py] of samples){const dd=(px-x)**2+(py-y)**2;if(dd<bd){bd=dd;best=l}}return best});
-  let c=0;while(c<6&&S.stars[STATIONS[c].id])c++;
-  const doneLen=c>=6?T:L[c];
-  const target=nextI>=0?nextI:5;
+  let c=0;while(c<STATIONS.length&&S.stars[STATIONS[c].id])c++;
+  const doneLen=c>=STATIONS.length?T:L[c];
+  const target=nextI>=0?nextI:STATIONS.length-1;
   const fromI=TOK_AT==null?target:TOK_AT,fromDone=DONE_AT==null?doneLen:DONE_AT;
   TOK_AT=target;DONE_AT=doneLen;
   walk(road,$('#tok'),$('#roadDone'),L[fromI],L[target],fromDone,doneLen,T);
@@ -795,7 +937,7 @@ function stationIntro(i){
     <div class="rules"><span><b>★★★</b> ${r3}</span><span><b>★★</b> up to ${l[1]} mistakes</span>${S.best[s.id]?`<span>Best: <b>${S.best[s.id].toLocaleString()}</b></span>`:''}</div>
     <div class="row"><button class="btn ghost" id="ib">Not yet</button><button class="btn primary huge" id="ig">Start!</button></div></div>`);
   o.dataset.esc=1;o.querySelector('#ib').onclick=()=>o.remove();
-  const g=o.querySelector('#ig');g.focus();g.onclick=()=>{o.remove();startStation(i);announce('Go!');tone(523,.1);tone(784,.2,'triangle',.1)};
+  const g=o.querySelector('#ig');g.focus();g.onclick=()=>{o.remove();startStation(i);if(s.id!=='caravan'){announce('Go!');tone(523,.1);tone(784,.2,'triangle',.1)}};
 }
 function startStation(i){
   stopTimers();const s=STATIONS[i];
@@ -826,6 +968,11 @@ function finish(){
   award('first');if(stars===3)award('perfect');
   if(s.id==='vocab'&&RUN.hints===0)award('nohint');
   if(s.id==='trial')award('gate');
+  if(s.id==='galilee'&&RUN.firstClue>=5)award('riddle');
+  if(s.id==='lamps'&&RUN.mistakes<=6)award('memory');
+  if(s.id==='caravan'&&RUN.lives===3)award('runner');
+  if(s.id==='copyist'&&RUN.mistakes===0)award('eyes');
+  if(s.id==='library'&&RUN.mistakes===0)award('librarian');
   if(STATIONS.every(x=>S.stars[x.id]))award('all');
   if(STATIONS.every(x=>S.stars[x.id]===3))award('allstars');
   const earned=RUN.earned,mist=RUN.mistakes,i=RUN.i,nb=RUN.newBadges.slice();RUN=null;save();hud();
@@ -872,14 +1019,14 @@ function renderSeal(){
     <h2>The Pilgrim’s Seal</h2>
     <p>This seal is awarded to</p>
     <p class="who">${esc(S.name||'Pilgrim')}</p>
-    <p style="max-width:34em">for traveling the whole road: where Christianity began, what Christians believe, its three major branches, its history, and its key words.</p>
+    <p style="max-width:34em">for traveling all eleven stations of the road: where Christianity began, what Christians believe, its three major branches, its history, its key words, and its influence on world culture.</p>
     <svg width="104" height="104" viewBox="0 0 100 100" aria-hidden="true">
       <path d="${starPath(50,50,48,40,16)}" fill="#d4553f"/>
       <circle cx="50" cy="50" r="36" fill="#b33f2c" stroke="#f6eedb" stroke-width="2" stroke-dasharray="3 3"/>
       <g transform="translate(30 30)">${tokenInner(S.avatar)}</g>
     </svg>
     <p class="rank">${LEVELS[levelOf(sc)][1]}</p>
-    <div class="cs"><div><small>Score</small><b>${sc.toLocaleString()}</b></div><div><small>Stars</small><b>${stars} / 18</b></div><div><small>Badges</small><b>${Object.keys(S.badges).length} / ${BADGES.length}</b></div></div>
+    <div class="cs"><div><small>Score</small><b>${sc.toLocaleString()}</b></div><div><small>Stars</small><b>${stars} / ${STATIONS.length*3}</b></div><div><small>Badges</small><b>${Object.keys(S.badges).length} / ${BADGES.length}</b></div></div>
     <div class="certbadges">${BADGES.filter(b=>S.badges[b.id]).map(b=>badgeIcon(b,true,36)).join('')}</div>
   </div></section>
   <div class="row" style="margin-top:24px">
@@ -1050,6 +1197,135 @@ function lightningGame(stage){
         tq.innerHTML='';g.classList.add('open');sfx.level();confetti(120);announce('The gate opens!');setTimeout(finish,1500)});
     }
     tq.querySelectorAll('.tfb').forEach(b=>b.onclick=()=>answer(b.dataset.v==='1',b));
+  }
+  show();
+}
+
+function riddleGame(stage){
+  const rs=shuffle(RIDDLES.slice());let i=0;RUN.firstClue=0;
+  function show(){
+    const r=rs[i];let shown=1,done=false;
+    const opts=shuffle([r.a,...shuffle(RIDDLE_GROUPS[r.g].filter(x=>x!==r.a)).slice(0,3)]);
+    stage.innerHTML=`<div class="riddle"><p class="qcount">Riddle ${i+1} of ${rs.length}</p><h3 class="q" style="margin:0">Who or what am I?</h3>
+      <div class="clues" id="clues"></div>
+      <div class="rbar"><p class="bonusline" id="bl"></p><button class="btn ghost small" id="more">Show next clue</button></div>
+      <div class="opts">${opts.map((o,k)=>`<button class="opt" data-k="${k}"><span class="let">${'ABCD'[k]}</span><span>${o}</span></button>`).join('')}</div>
+      <div class="explain" hidden></div></div>`;
+    const bonus=()=>shown===1?150:shown===2?75:0;
+    function drawClues(){
+      $('#clues').innerHTML=r.c.map((c,k)=>k<shown?`<div class="clue-c"><span class="cn">${k+1}</span><span>${c}</span></div>`:`<div class="clue-c hidden"><span class="cn">${k+1}</span><span>Clue ${k+1} is hidden (worth less bonus)</span></div>`).join('');
+      $('#bl').textContent=done?'':bonus()?`Answer now for a +${bonus()} bonus!`:'Last clue. No bonus, but you can still score!';
+      $('#more').disabled=done||shown>=3}
+    drawClues();
+    $('#more').onclick=()=>{if(shown<3){shown++;sfx.tap(500+shown*80);drawClues()}};
+    stage.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const o=opts[+b.dataset.k],ok=o===r.a,bo=bonus();done=true;shown=3;drawClues();
+      stage.querySelectorAll('.opt').forEach((x,k)=>{x.disabled=true;if(opts[k]===r.a)x.classList.add('right');else if(x!==b)x.classList.add('dim')});
+      if(ok){if(bo===150)RUN.firstClue++;good(b,bo)}else{b.classList.add('wrong');bad(b)}
+      explainBox(stage,ok,ok?(bo===150?'First-clue genius!':pick(PRAISE)):'Not quite.',`I am <b>${r.a}</b>. ${r.e}`,i+1<rs.length?'Next riddle':'Finish station',()=>{i++;i<rs.length?show():finish()});
+    });
+  }
+  show();
+}
+function memoryGame(stage){
+  const cards=shuffle(MEMORY.flatMap((p,i)=>[{i,t:p.a,k:'term'},{i,t:p.b,k:'def'}]));
+  let open=[],lock=false,matched=0;
+  const back=`<svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><path d="M7 25C7 21 13 19 21 19H29C33 19 34 21 32 24L28 26Z" fill="#f0c04f"/><path d="M12 30H25" stroke="#f0c04f" stroke-width="2.5" stroke-linecap="round"/><path d="M30 16C27 12 30 9 31 6C34 10 35 13 30 16Z" fill="#ffe08a"/></svg>`;
+  stage.innerHTML=`<p class="hint-line">Flip two cards at a time. Find each <b>word</b> and its <b>meaning</b>. Matched: <b id="mm">0</b> / ${MEMORY.length}</p>
+    <div class="mem">${cards.map((c,k)=>`<button class="mc" data-k="${k}" aria-label="Face-down card"><span class="mc-in"><span class="mc-b">${back}</span><span class="mc-f ${c.k}">${c.t}</span></span></button>`).join('')}</div>`;
+  const els=[...stage.querySelectorAll('.mc')];
+  els.forEach((el,k)=>el.onclick=()=>{
+    if(lock||el.classList.contains('flip'))return;
+    el.classList.add('flip');el.setAttribute('aria-label',cards[k].t);sfx.tap(520+open.length*120);open.push(k);
+    if(open.length<2)return;
+    lock=true;const [a,b]=open;open=[];
+    if(cards[a].i===cards[b].i){setTimeout(()=>{els[a].classList.add('matched');els[b].classList.add('matched');good(els[b]);matched++;$('#mm').textContent=matched;lock=false;if(matched===MEMORY.length)setTimeout(finish,900)},380)}
+    else{setTimeout(()=>{RUN.mistakes++;S.streak=0;tone(240,.15,'sine',0,.05);$('#missN').textContent=RUN.mistakes;hud();save();
+      setTimeout(()=>{[a,b].forEach(x=>{els[x].classList.remove('flip');els[x].setAttribute('aria-label','Face-down card')});lock=false},700)},250)}
+  });
+}
+function errorGame(stage){
+  const ss=shuffle(ERRORS.slice()).slice(0,10);let i=0;
+  const core=w=>w.replace(/[^\w’']/g,'');
+  function show(){
+    const e=ss[i],words=e.s.split(' '),idx=words.findIndex(w=>core(w)===e.bad);
+    stage.innerHTML=`<p class="qcount">Scroll ${i+1} of ${ss.length}</p><h3 class="q">Find the copyist’s mistake!</h3>
+      <div class="parch"><p>${words.map((w,k)=>`<button class="wd" data-k="${k}">${w}</button>`).join(' ')}</p></div>
+      <div class="explain" hidden></div>`;
+    const wds=[...stage.querySelectorAll('.wd')];
+    wds.forEach((b,k)=>b.onclick=()=>{
+      wds.forEach(x=>x.disabled=true);
+      const t=wds[idx],w=words[idx],lead=(w.match(/^[^\w’']+/)||[''])[0],trail=(w.match(/[^\w’']+$/)||[''])[0];
+      t.innerHTML=`${lead}<s>${core(w)}</s> <ins>${e.fix}</ins>${trail}`;
+      if(k===idx){t.classList.add('caught');good(t)}else{b.classList.add('wrong');t.classList.add('missed');bad(b)}
+      explainBox(stage,k===idx,k===idx?'Caught it!':'The mistake was “'+e.bad+'.”',e.e,i+1<ss.length?'Next scroll':'Finish station',()=>{i++;i<ss.length?show():finish()});
+    });
+  }
+  show();
+}
+function runnerGame(stage){
+  const qs=shuffle(RUNNER.slice()).slice(0,12);let i=0,lane=1;RUN.lives=3;const gen=GEN;
+  const lamp='<svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true"><path d="M5 26C5 21 12 18 21 18H31C35 18 36 21 33 24L29 27Z" fill="#f0c04f"/><path d="M12 31H26" stroke="#f0c04f" stroke-width="3" stroke-linecap="round"/><path d="M31 15C28 11 31 7 32 4C35 8 36 12 31 15Z" fill="#ff8a3d"/></svg>';
+  stage.innerHTML=`<div class="runner">
+    <div class="rhead"><p class="qcount" id="rq">Get ready…</p><div class="lamps" id="lamps" aria-label="Lamps left">${lamp.repeat(3)}</div></div>
+    <p class="rprompt" id="rp" aria-live="polite">Steer through the gate with the right answer!</p>
+    <div class="rboard" id="rb"><span class="rdiv" style="left:35.33%"></span><span class="rdiv" style="left:64.66%"></span>
+      <div class="rgates" id="rg"></div><div class="rplayer" id="rpl">${token(S.avatar,50)}</div></div>
+    <div class="rctl"><button class="btn ghost" id="rl">◀ Left</button><button class="btn ghost" id="rr">Right ▶</button></div>
+    <p class="sub" style="text-align:center">Tap a lane, use the buttons, or press the ← → keys.</p></div>`;
+  const rb=$('#rb'),rg=$('#rg'),rpl=$('#rpl'),rp=$('#rp'),rq=$('#rq');
+  const pos=[20.33,50,79.66];
+  function setLane(n,quiet){lane=Math.max(0,Math.min(2,n));rpl.style.left=pos[lane]+'%';if(!quiet)sfx.tap(420+lane*90)}
+  setLane(1,true);
+  rb.onclick=e=>{const r=rb.getBoundingClientRect();setLane(Math.floor((e.clientX-r.left)/r.width*3))};
+  $('#rl').onclick=()=>setLane(lane-1);$('#rr').onclick=()=>setLane(lane+1);
+  KEYH=e=>{if(e.key==='ArrowLeft'||e.key==='a'||e.key==='A'){e.preventDefault();setLane(lane-1)}else if(e.key==='ArrowRight'||e.key==='d'||e.key==='D'){e.preventDefault();setLane(lane+1)}};
+  document.addEventListener('keydown',KEYH);
+  function next(){
+    if(gen!==GEN)return;
+    if(i>=qs.length||RUN.lives<=0){
+      if(RUN.lives<=0){announce('Out of lamp oil!','The caravan stops here');sfx.bad()}else announce('Road complete!',RUN.lives===3?'All lamps still lit!':'');
+      setTimeout(()=>{if(gen===GEN)finish()},1400);return}
+    const q=qs[i],opts=shuffle(q.o.map((t,k)=>({t,ok:k===0}))),ci=opts.findIndex(o=>o.ok);
+    rq.textContent=`Gate ${i+1} of ${qs.length}`;rp.textContent=q.q;
+    rg.innerHTML=opts.map(o=>`<div class="rsign">${o.t}</div>`).join('');
+    const travel=rb.clientHeight-rg.offsetHeight-80,D=Math.max(4000,7600-i*300),t0=performance.now();
+    rg.style.transform='translateY(0)';
+    (function f(t){
+      if(gen!==GEN)return;
+      const k=Math.min(1,(t-t0)/D);rg.style.transform=`translateY(${(k*travel).toFixed(1)}px)`;
+      if(k<1)return requestAnimationFrame(f);
+      const signs=rg.querySelectorAll('.rsign');signs[ci].classList.add('ok');
+      if(lane===ci){good(rpl);rp.textContent='Through the gate! ✓ '+opts[ci].t}
+      else{signs[lane].classList.add('no');bad(rpl);RUN.lives--;$('#lamps').querySelectorAll('svg').forEach((s,j)=>s.classList.toggle('off',j>=RUN.lives));rp.textContent='A lamp went out! The answer was: '+opts[ci].t}
+      i++;setTimeout(next,1400);
+    })(t0);
+  }
+  setTimeout(()=>{if(gen!==GEN)return;announce('Ready…');setTimeout(()=>{if(gen!==GEN)return;announce('Go!');tone(523,.1);tone(784,.2,'triangle',.1);next()},1100)},300);
+}
+function clozeGame(stage){
+  let p=0;
+  function show(){
+    const C=CLOZE[p],ans=[];
+    const html=C.t.replace(/\{([^}]+)\}/g,(m,w)=>{ans.push(w);return `<button class="blank" data-b="${ans.length-1}" aria-label="Blank ${ans.length}">?</button>`});
+    const bank=shuffle([...ans,...C.x]);
+    stage.innerHTML=`<p class="qcount">Scroll ${p+1} of ${CLOZE.length} · ${C.h}</p><h3 class="q">Restore the faded words</h3>
+      <div class="parch">${html}</div>
+      <div class="bank">${bank.map(w=>`<button class="wchip" data-w="${esc(w)}">${w}</button>`).join('')}</div>
+      <div class="explain" hidden></div>`;
+    const blanks=[...stage.querySelectorAll('.blank')];let sel=0,filled=0;
+    const mark=()=>blanks.forEach((b,k)=>b.classList.toggle('cur',k===sel&&!b.classList.contains('ok')));
+    mark();
+    blanks.forEach((b,k)=>b.onclick=()=>{if(!b.classList.contains('ok')){sel=k;mark();sfx.tap(480)}});
+    stage.querySelectorAll('.wchip').forEach(c=>c.onclick=()=>{
+      if(sel<0)return;const b=blanks[sel];
+      if(c.dataset.w===ans[sel]){
+        b.textContent=ans[sel];b.classList.add('ok');b.disabled=true;c.disabled=true;good(b);filled++;
+        sel=blanks.findIndex(x=>!x.classList.contains('ok'));mark();
+        if(filled===blanks.length){stage.querySelectorAll('.wchip').forEach(x=>x.disabled=true);
+          explainBox(stage,true,'Scroll restored!',C.e,p+1<CLOZE.length?'Next scroll':'Finish station',()=>{p++;p<CLOZE.length?show():finish()})}
+      }else{c.classList.add('wrong');bad(c);setTimeout(()=>c.classList.remove('wrong'),550)}
+    });
   }
   show();
 }
