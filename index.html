@@ -1,0 +1,1065 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The Pilgrim's Road</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Marcellus+SC&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: a night-sky Byzantine mosaic world. An illustrated road map of six medallion stations; a pilgrim token walks the road; each station is a chunky, framed game board; rewards arrive in a treasure chest. */
+:root{
+  --grout:#0a1430;
+  --night:#0c1736;
+  --lapis:#0f1d3d;
+  --lapis-2:#172a55;
+  --lapis-3:#22396e;
+  --lapis-4:#2f4d8f;
+  --shadow:#050b1f;
+  --gold:#f0c04f;
+  --gold-hi:#ffe08a;
+  --gold-deep:#b8862a;
+  --gold-dark:#6e4d12;
+  --ivory:#f6eedb;
+  --muted:#aab4cd;
+  --red:#d4553f;
+  --red-dark:#7d2618;
+  --olive:#93b956;
+  --olive-dark:#4a6420;
+  --line:rgba(240,192,79,.32);
+  --panel:rgba(15,29,61,.94);
+  --display:"Marcellus SC","Trajan Pro",Georgia,serif;
+  --game:"Fredoka","Nunito",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+html,body{min-height:100%}
+body{background:var(--grout);color:var(--ivory);font-family:var(--body);font-size:16px;line-height:1.5;overflow-x:hidden;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--lapis)}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:-2}
+.vignette{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% 30%,rgba(10,20,48,.25),rgba(10,20,48,.9) 72%)}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:80}
+.wrap{max-width:1060px;margin:0 auto}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible,label:focus-within{outline:3px solid var(--gold-hi);outline-offset:3px}
+h1,h2,h3{text-wrap:balance;margin:0}
+p{margin:0}
+.eyebrow{font-family:var(--display);letter-spacing:.2em;font-size:.82rem;color:var(--muted);text-transform:uppercase}
+
+/* ---------- Buttons: chunky, pressable ---------- */
+.btn{font-family:var(--game);font-weight:600;font-size:1.08rem;letter-spacing:.01em;border:0;border-radius:14px;padding:12px 24px;background:var(--lapis-3);color:var(--ivory);
+  box-shadow:0 5px 0 var(--shadow),inset 0 1px 0 rgba(255,255,255,.14);transition:transform .08s,box-shadow .08s,filter .12s}
+.btn:hover:not(:disabled){filter:brightness(1.12)}
+.btn:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 var(--shadow)}
+.btn.primary{background:linear-gradient(var(--gold-hi),var(--gold) 55%,#e0a93a);color:#3a2706;box-shadow:0 5px 0 var(--gold-dark),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn.primary:active:not(:disabled){box-shadow:0 1px 0 var(--gold-dark)}
+.btn.ghost{background:var(--lapis-2);border:1px solid var(--line);box-shadow:0 4px 0 var(--shadow)}
+.btn.small{padding:7px 14px;font-size:.92rem}
+.btn.huge{font-size:1.35rem;padding:16px 36px;border-radius:18px}
+.btn:disabled{opacity:.45;cursor:default}
+
+/* ---------- HUD ---------- */
+.hud{position:sticky;top:env(safe-area-inset-top,0px);z-index:25;margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:8px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));
+  background:linear-gradient(var(--lapis),rgba(15,29,61,.96));border-bottom:2px solid var(--gold-deep);box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.hud-in{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brand{font-family:var(--display);color:var(--gold);font-size:1.05rem;letter-spacing:.06em;background:none;border:0;padding:0;display:flex;align-items:center;gap:8px}
+.brand svg{flex:none}
+.hud-sp{flex:1}
+.lvl{display:flex;align-items:center;gap:8px;background:var(--lapis-2);border:1px solid var(--line);border-radius:999px;padding:3px 12px 3px 3px}
+.lvl-n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,var(--gold-hi),var(--gold-deep));color:#3a2706;font-family:var(--game);font-weight:700}
+.lvl-t{display:grid;gap:2px;min-width:92px}
+.lvl-t small{font-family:var(--game);font-weight:600;font-size:.78rem;line-height:1}
+.xp{height:6px;border-radius:9px;background:var(--grout);overflow:hidden}
+.xp i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--olive),var(--gold));transition:width .5s}
+.chip{display:flex;align-items:center;gap:6px;background:var(--lapis-2);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-family:var(--game);font-weight:600;font-size:.9rem}
+.chip b{font-variant-numeric:tabular-nums;color:var(--gold);font-weight:700}
+.combo svg{color:var(--muted);transition:color .2s,transform .2s}
+.cbar{width:34px;height:6px;border-radius:9px;background:var(--grout);overflow:hidden}
+.cbar i{display:block;height:100%;width:0;background:var(--red);transition:width .3s}
+.combo.warm svg{color:var(--gold)}
+.combo.hot{border-color:var(--red);background:rgba(212,85,63,.25);animation:hotglow 1s ease-in-out infinite}
+.combo.hot svg{color:var(--red);transform:scale(1.2)}
+@keyframes hotglow{50%{box-shadow:0 0 16px rgba(212,85,63,.7)}}
+.iconbtn{background:var(--lapis-2);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-family:var(--game);font-weight:600;font-size:.9rem;display:flex;gap:6px;align-items:center}
+@media (max-width:640px){.hide-sm{display:none!important}}
+
+/* ---------- Title ---------- */
+.title-screen{padding-block:44px 16px;display:grid;gap:22px;justify-items:center;text-align:center;position:relative}
+.motes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.motes span{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold-hi);box-shadow:0 0 10px var(--gold);opacity:0;animation:mote 7s linear infinite}
+@keyframes mote{0%{transform:translateY(40px);opacity:0}20%{opacity:.9}100%{transform:translateY(-260px);opacity:0}}
+.crest{width:120px;height:120px;animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+.big{font-family:var(--display);font-size:clamp(2.7rem,9vw,5.6rem);line-height:.95;
+  background:linear-gradient(100deg,var(--gold-deep) 0%,var(--gold) 25%,var(--gold-hi) 45%,var(--gold) 60%,var(--gold-deep) 100%);background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5s linear infinite;filter:drop-shadow(0 4px 0 rgba(110,77,18,.9)) drop-shadow(0 12px 30px rgba(240,192,79,.25))}
+@keyframes shimmer{from{background-position:120% 0}to{background-position:-100% 0}}
+.lede{max-width:36em;font-size:1.1rem}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.start-panel{width:min(600px,100%);box-sizing:border-box;display:grid;gap:18px;text-align:left}
+.flabel{font-family:var(--game);font-weight:600;font-size:.95rem;color:var(--gold)}
+.start-panel input[type=text]{width:100%;box-sizing:border-box;font:inherit;font-family:var(--game);font-size:1.25rem;padding:12px 16px;border-radius:14px;border:2px solid var(--line);background:var(--grout);color:var(--ivory)}
+.avatars{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.av{position:relative;display:grid;justify-items:center;gap:4px;padding:10px 4px 8px;border-radius:14px;background:var(--lapis-2);border:2px solid transparent;cursor:pointer;transition:transform .12s}
+.av input{position:absolute;opacity:0;pointer-events:none}
+.av span{font-family:var(--game);font-size:.82rem;font-weight:600;color:var(--muted)}
+.av:hover{transform:translateY(-3px)}
+.av:has(input:checked){border-color:var(--gold);background:rgba(240,192,79,.14)}
+.av:has(input:checked) span{color:var(--gold)}
+.av:has(input:checked) svg{animation:hop .5s}
+@keyframes hop{40%{transform:translateY(-8px) rotate(-6deg)}}
+.how{display:grid;gap:8px;padding:0;margin:0;list-style:none;color:var(--muted);font-size:.95rem}
+.how li{display:flex;gap:10px;align-items:flex-start}
+.how li svg{flex:none;margin-top:3px}
+
+/* ---------- Map ---------- */
+.map-head{padding-block:22px 6px;display:flex;align-items:end;gap:16px;flex-wrap:wrap;justify-content:space-between}
+.map-head h2{font-family:var(--display);font-size:clamp(1.6rem,4.4vw,2.5rem);color:var(--gold)}
+.map-head p{color:var(--muted)}
+.mapframe{margin-top:10px;padding:7px;border-radius:24px;background:conic-gradient(var(--gold) 25%,var(--gold-deep) 0 50%,var(--gold) 0 75%,var(--gold-deep) 0) 0 0/14px 14px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.mapbox{border-radius:18px;overflow:hidden;background:var(--night)}
+.mapbox svg{width:100%;height:auto;display:block}
+.node{cursor:pointer}
+.node:focus{outline:none}
+.node .halo{fill:var(--gold);opacity:0}
+.node.next .halo{animation:halo 1.6s ease-in-out infinite}
+@keyframes halo{50%{opacity:.35}}
+.node:focus-visible .halo{opacity:.6}
+.node .rim{fill:var(--gold-deep);stroke:var(--gold);stroke-width:3;stroke-dasharray:6 3}
+.node .medal{fill:var(--lapis-3);stroke:var(--gold-dark);stroke-width:2}
+.node .lm{color:var(--ivory)}
+.node.done .medal{fill:var(--gold)}
+.node.done .lm{color:var(--lapis)}
+.node:hover:not(.locked) .medal{filter:brightness(1.25)}
+.node.locked{cursor:not-allowed}
+.node.locked .rim{fill:#26304b;stroke:#4a5675}
+.node.locked .medal{fill:#1a2440}
+.node.locked .lm{color:#6d7895}
+.numb{fill:var(--red);stroke:var(--ivory);stroke-width:2}
+.numt{font-family:var(--display);font-size:11px;fill:var(--ivory);text-anchor:middle;dominant-baseline:central}
+.sstar{fill:#33406a}
+.sstar.on{fill:var(--gold-hi);stroke:var(--gold-dark);stroke-width:1}
+.plaque{fill:rgba(10,20,48,.86);stroke:var(--line);stroke-width:1.5}
+.node.done .plaque{stroke:var(--gold)}
+.nlabel{font-family:var(--display);fill:var(--ivory);font-size:14.5px;text-anchor:middle}
+.ntopic{font-family:var(--game);fill:var(--muted);font-size:11.5px;text-anchor:middle;font-weight:500}
+.twinkle{animation:twinkle 3s ease-in-out infinite}
+@keyframes twinkle{50%{opacity:.2}}
+.bob{animation:bob 1.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.passport{margin-top:20px;display:grid;gap:14px}
+.pp-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.passport h3{font-family:var(--display);color:var(--gold);font-size:1.25rem;letter-spacing:.06em}
+.stamps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.stamp{border:2px dashed var(--line);border-radius:14px;padding:10px 6px;text-align:center;display:grid;gap:4px;justify-items:center;min-width:0}
+.stamp .sl{font-family:var(--game);font-size:.75rem;color:var(--muted);overflow-wrap:anywhere;line-height:1.2}
+.stamp .ss{color:var(--gold-hi);letter-spacing:1px;font-size:.85rem;min-height:1.3em}
+.stamp.on{border-style:solid;border-color:var(--gold);background:radial-gradient(circle,rgba(240,192,79,.18),rgba(240,192,79,.04));transform:rotate(-2deg)}
+.stamp.on:nth-child(even){transform:rotate(2deg)}
+.final-cta{display:flex;justify-content:center;padding-top:6px}
+.teacher{margin-top:24px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;color:var(--muted);font-size:.85rem}
+.teacher label{display:flex;gap:8px;align-items:center;cursor:pointer}
+.linkish{background:none;border:0;color:var(--muted);text-decoration:underline;padding:0;font-size:.85rem}
+
+/* ---------- Station ---------- */
+.station{padding-block:20px 0;display:grid;gap:16px}
+.st-banner{display:flex;gap:18px;align-items:center}
+.st-banner svg{flex:none;filter:drop-shadow(0 6px 0 rgba(0,0,0,.35))}
+.st-banner .t{display:grid;gap:4px;min-width:0}
+.st-banner .eyebrow{color:var(--gold)}
+.st-banner h2{font-family:var(--display);font-size:clamp(1.6rem,4.4vw,2.5rem);line-height:1.05}
+.instr{color:var(--muted);max-width:46em}
+.st-bar{display:flex;gap:12px;align-items:center}
+.track{flex:1;position:relative;height:16px;border-radius:999px;background:var(--grout);border:2px solid var(--lapis-3);margin-inline:6px 20px}
+.track-fill{position:absolute;inset:0 auto 0 0;width:0;border-radius:999px;background:repeating-linear-gradient(90deg,var(--gold) 0 10px,var(--gold-deep) 10px 12px);transition:width .45s cubic-bezier(.3,1.4,.6,1)}
+.track-tok{position:absolute;top:50%;left:0;transform:translate(-50%,-62%);transition:left .45s cubic-bezier(.3,1.4,.6,1);filter:drop-shadow(0 3px 2px rgba(0,0,0,.5))}
+.track-flag{position:absolute;right:-16px;top:50%;transform:translateY(-75%)}
+.miss b{color:var(--red)!important}
+.frame{padding:7px;border-radius:24px;background:conic-gradient(var(--gold) 25%,var(--gold-deep) 0 50%,var(--gold) 0 75%,var(--gold-deep) 0) 0 0/14px 14px;box-shadow:0 18px 40px rgba(0,0,0,.4)}
+.stage{background:radial-gradient(ellipse at top,var(--lapis-2),var(--lapis) 70%);border-radius:18px;padding:24px;min-height:300px}
+
+.qcount{font-family:var(--game);font-weight:600;font-size:.85rem;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.q{font-family:var(--game);font-weight:600;font-size:clamp(1.3rem,3.6vw,1.75rem);margin:6px 0 18px;line-height:1.25}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.opt{display:flex;gap:12px;align-items:center;text-align:left;background:var(--lapis-3);border:2px solid transparent;border-radius:16px;padding:14px 16px;font-weight:700;font-size:1.04rem;min-width:0;
+  box-shadow:0 5px 0 var(--shadow);transition:transform .08s,box-shadow .08s,border-color .12s}
+.opt .let{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--lapis);color:var(--gold);font-family:var(--game);font-weight:700}
+.opt:hover:not(:disabled){border-color:var(--gold);transform:translateY(-2px);box-shadow:0 7px 0 var(--shadow)}
+.opt:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 var(--shadow)}
+.opt:disabled{cursor:default}
+.opt.dim{opacity:.45}
+.right{background:linear-gradient(#a6cc66,var(--olive))!important;color:#16210a!important;border-color:var(--ivory)!important;box-shadow:0 5px 0 var(--olive-dark)!important;opacity:1!important}
+.right .let{background:var(--olive-dark);color:var(--ivory)}
+.wrong{background:linear-gradient(#e2705b,var(--red))!important;color:#fff!important;box-shadow:0 5px 0 var(--red-dark)!important;opacity:1!important}
+.wrong .let{background:var(--red-dark);color:#fff}
+.explain{margin-top:18px;padding:16px 18px;border-radius:16px;background:rgba(5,11,31,.6);border:2px solid var(--line);display:grid;gap:14px;justify-items:start;animation:slidein .3s ease-out}
+.explain.ok{border-color:var(--olive)}
+.explain.no{border-color:var(--red)}
+.explain p{max-width:62ch}
+.explain strong{font-family:var(--game);font-weight:700;font-size:1.1rem}
+.explain.ok strong{color:var(--olive)}
+.explain.no strong{color:#ef8a77}
+@keyframes slidein{from{transform:translateY(10px);opacity:0}}
+
+/* Match */
+.match{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:20px}
+.col{display:grid;gap:10px;align-content:start;min-width:0}
+.col-h{font-family:var(--display);color:var(--gold);letter-spacing:.1em}
+.mb,.mv{text-align:left;background:var(--lapis-3);border:2px solid transparent;border-radius:14px;padding:12px 14px;display:grid;gap:3px;min-width:0;box-shadow:0 4px 0 var(--shadow);transition:transform .1s,border-color .12s,opacity .3s}
+.mb:hover:not(:disabled),.mv:hover:not(:disabled){border-color:var(--gold);transform:translateY(-2px)}
+.mb-t{font-family:var(--game);font-weight:600;font-size:1.08rem}
+.mb-d{font-size:.86rem;color:var(--muted)}
+.ref{font-family:var(--game);font-weight:600;font-size:.82rem;color:var(--gold);letter-spacing:.03em}
+.vt{font-size:.96rem;font-style:italic}
+.sel{border-color:var(--gold-hi)!important;background:var(--lapis-4)!important;transform:translateY(-3px) scale(1.02)!important;box-shadow:0 0 0 4px rgba(240,192,79,.25),0 6px 0 var(--shadow)!important}
+.locked{background:linear-gradient(rgba(147,185,86,.35),rgba(147,185,86,.18))!important;border-color:var(--olive)!important;cursor:default;box-shadow:none!important}
+.locked .mb-d,.locked .vt{color:var(--ivory)}
+
+/* Sort */
+.sort{display:grid;gap:22px}
+.scard{position:relative;background:linear-gradient(var(--ivory),#e8dcbf);color:var(--lapis);border-radius:18px;padding:30px 22px;text-align:center;display:grid;gap:10px;box-shadow:0 10px 0 var(--gold-deep),0 16px 30px rgba(0,0,0,.35);animation:deal .4s cubic-bezier(.3,1.5,.6,1);overflow:hidden}
+.scard .qcount{color:var(--lapis-3)}
+.stext{font-family:var(--game);font-weight:600;font-size:clamp(1.25rem,3.6vw,1.65rem);line-height:1.3}
+@keyframes deal{from{transform:translateY(-30px) rotate(-5deg) scale(.9);opacity:0}}
+.stampmark{position:absolute;right:14px;top:12px;font-family:var(--display);font-size:1rem;letter-spacing:.06em;padding:4px 12px;border:3px solid;border-radius:8px;transform:rotate(8deg);animation:stampin .3s cubic-bezier(.3,1.8,.6,1)}
+.stampmark.ok{color:var(--olive-dark);border-color:var(--olive-dark)}
+.stampmark.no{color:var(--red-dark);border-color:var(--red-dark)}
+@keyframes stampin{from{transform:rotate(8deg) scale(2.4);opacity:0}}
+.gates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gate{display:grid;justify-items:center;gap:8px;border:0;border-radius:16px;padding:16px 10px 14px;background:var(--lapis-3);font-family:var(--display);font-size:1.02rem;letter-spacing:.03em;min-width:0;box-shadow:0 5px 0 var(--shadow);transition:transform .08s}
+.gate svg{width:46px;height:46px}
+.gate:hover:not(:disabled){transform:translateY(-3px)}
+.gate:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 var(--shadow)}
+.gate:disabled{cursor:default}
+.g-cat{border-top:6px solid var(--red)}
+.g-orth{border-top:6px solid var(--gold)}
+.g-prot{border-top:6px solid var(--olive)}
+
+/* Timeline */
+.hint-line{font-family:var(--game);font-weight:500;color:var(--muted);margin-bottom:16px;font-size:1.05rem}
+.hint-line b{color:var(--gold)}
+.slots{list-style:none;padding:0;margin:0 0 22px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;position:relative}
+.slots::before{content:"";position:absolute;left:4%;right:4%;top:22px;height:6px;border-radius:9px;background:repeating-linear-gradient(90deg,var(--gold-deep) 0 10px,transparent 10px 16px);z-index:0}
+.slot{position:relative;z-index:1;display:grid;gap:6px;justify-items:center;text-align:center;min-width:0}
+.slot-n{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:var(--lapis);border:3px dashed var(--line);font-family:var(--display);color:var(--muted);font-size:1.1rem;transition:all .25s}
+.slot-t{font-family:var(--game);font-size:.88rem;color:var(--muted);line-height:1.25;min-height:2.5em}
+.slot-y{font-family:var(--game);color:var(--gold-hi);font-weight:700;font-size:1rem;min-height:1.5em}
+.slot.filled .slot-n{background:var(--gold);border:3px solid var(--gold-hi);color:var(--lapis);animation:popin .35s cubic-bezier(.3,1.8,.6,1)}
+.slot.filled .slot-t{color:var(--ivory)}
+.slot.cur .slot-n{box-shadow:0 0 0 5px rgba(240,192,79,.35)}
+@keyframes popin{from{transform:scale(.4)}}
+.evs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ev{text-align:left;background:var(--lapis-3);border:2px solid transparent;border-radius:14px;padding:14px 16px;font-weight:700;min-width:0;box-shadow:0 5px 0 var(--shadow);transition:transform .08s,opacity .3s}
+.ev:hover:not(:disabled){border-color:var(--gold);transform:translateY(-2px)}
+.ev:disabled{opacity:.15;cursor:default;transform:scale(.96)}
+.yearq{display:grid;gap:12px;animation:slidein .3s ease-out}
+.yearq .q{margin:0}
+.years{display:flex;gap:12px;flex-wrap:wrap}
+.year{font-family:var(--game);font-weight:700;font-size:1.15rem;padding:12px 20px;border-radius:14px;border:0;background:var(--lapis-3);box-shadow:0 5px 0 var(--shadow)}
+.year:hover:not(:disabled){filter:brightness(1.2)}
+
+/* Vocab */
+.vocab{display:grid;gap:20px;justify-items:center;text-align:center}
+.clue{font-family:var(--game);font-weight:600;font-size:clamp(1.2rem,3.4vw,1.6rem);max-width:30em;padding:14px 22px;border-radius:14px;background:rgba(5,11,31,.45);border:1px dashed var(--line)}
+.answer{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.ab{width:44px;height:52px;border-radius:10px;background:rgba(5,11,31,.6);border:2px solid var(--lapis-3);display:grid;place-items:center;font-family:var(--display);font-size:1.7rem;color:var(--gold-hi)}
+.ab.f{border-color:var(--gold);animation:popin .2s ease-out}
+.ab.hinted{color:var(--muted);border-style:dashed}
+.answer.win .ab{background:var(--gold);color:var(--lapis);border-color:var(--gold-hi);animation:wave .5s ease-out both}
+.answer.win .ab:nth-child(2){animation-delay:.05s}.answer.win .ab:nth-child(3){animation-delay:.1s}.answer.win .ab:nth-child(4){animation-delay:.15s}.answer.win .ab:nth-child(5){animation-delay:.2s}.answer.win .ab:nth-child(6){animation-delay:.25s}.answer.win .ab:nth-child(7){animation-delay:.3s}.answer.win .ab:nth-child(8){animation-delay:.35s}
+@keyframes wave{40%{transform:translateY(-12px)}}
+.tiles{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}
+.tile{width:50px;height:54px;border-radius:10px;border:0;background:linear-gradient(var(--ivory),#ddcfae);color:var(--lapis);font-family:var(--display);font-size:1.65rem;box-shadow:0 5px 0 var(--gold-deep);transition:transform .1s,opacity .15s}
+.tile:hover:not(:disabled){transform:translateY(-3px) rotate(-3deg)}
+.tile:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 var(--gold-deep)}
+.tile:disabled{opacity:.15;cursor:default;transform:translateY(4px);box-shadow:none}
+.vctl{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+/* Lightning / gate boss */
+.bolt{display:grid;gap:16px;text-align:center;justify-items:center}
+.biggate{width:min(340px,100%);height:auto}
+.door-l,.door-r{transition:transform 1s cubic-bezier(.6,0,.3,1);transform-box:fill-box}
+.door-l{transform-origin:left center}
+.door-r{transform-origin:right center}
+.biggate.open .door-l,.biggate.open .door-r{transform:scaleX(.08)}
+.seal{transition:opacity .3s,transform .3s;transform-box:fill-box;transform-origin:center}
+.seal.broken{opacity:.18;transform:scale(.6)}
+.biggate.hit{animation:shake .35s}
+.hp{font-family:var(--game);font-weight:600;color:var(--muted);font-size:.9rem}
+.hp b{color:var(--gold)}
+.timer{width:100%;height:14px;border-radius:999px;background:var(--grout);overflow:hidden;border:2px solid var(--lapis-3)}
+.timer span{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--gold),var(--olive));transform-origin:left}
+.timer.low{animation:hotglow .5s infinite;border-color:var(--red)}
+.stmt{font-family:var(--game);font-weight:600;font-size:clamp(1.3rem,4vw,1.9rem);max-width:26em;min-height:3em;display:grid;place-items:center;line-height:1.25}
+.tf{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:min(480px,100%)}
+.tfb{font-size:1.35rem;padding:18px}
+.tfb.t{background:linear-gradient(#a6cc66,var(--olive));color:#16210a;box-shadow:0 5px 0 var(--olive-dark)}
+.tfb.f{background:linear-gradient(#e2705b,var(--red));color:#fff;box-shadow:0 5px 0 var(--red-dark)}
+.tfb.right{outline:4px solid var(--ivory)}
+.tfb.dim{opacity:.35}
+
+/* ---------- Overlays ---------- */
+.overlay{position:fixed;inset:0;z-index:60;background:rgba(5,10,26,.82);display:grid;place-items:center;overflow-y:auto;padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px));animation:fadein .2s}
+@keyframes fadein{from{opacity:0}}
+.modal{width:min(500px,100%);box-sizing:border-box;text-align:center;display:grid;gap:14px;justify-items:center;animation:rise .4s cubic-bezier(.3,1.5,.6,1)}
+@keyframes rise{from{transform:translateY(30px) scale(.92);opacity:0}}
+.modal h2{font-family:var(--display);color:var(--gold);font-size:clamp(1.7rem,5vw,2.2rem)}
+.rules{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.rules span{font-family:var(--game);font-weight:500;font-size:.85rem;padding:5px 12px;border-radius:999px;background:var(--lapis-2);border:1px solid var(--line)}
+.rules b{color:var(--gold-hi)}
+.chest{width:170px;height:auto;cursor:pointer}
+.chest .lid{transition:transform .5s cubic-bezier(.3,1.6,.6,1);transform-box:fill-box;transform-origin:left bottom}
+.chest.open .lid{transform:rotate(-28deg) translate(-4px,-14px)}
+.chest .glow{opacity:0;transition:opacity .4s}
+.chest.open .glow{opacity:1}
+.chest:not(.open){animation:wiggle 1.4s ease-in-out infinite}
+@keyframes wiggle{0%,60%,100%{transform:none}70%{transform:rotate(-4deg)}80%{transform:rotate(4deg)}90%{transform:rotate(-2deg)}}
+.tap{font-family:var(--game);font-weight:600;color:var(--gold-hi);animation:twinkle 1.4s infinite}
+.reward{display:grid;gap:12px;justify-items:center;width:100%}
+.bigstars{display:flex;gap:6px}
+.bigstars svg{width:54px;height:54px;opacity:0;animation:starpop .45s cubic-bezier(.3,1.8,.6,1) forwards}
+.bigstars svg:nth-child(2){animation-delay:.35s}.bigstars svg:nth-child(3){animation-delay:.7s}
+@keyframes starpop{from{transform:scale(.2) rotate(-40deg);opacity:0}to{transform:none;opacity:1}}
+.earned{font-family:var(--game);font-weight:700;font-size:1.5rem;color:var(--gold-hi);font-variant-numeric:tabular-nums}
+.sub{color:var(--muted);font-size:.92rem}
+.dyk{background:rgba(5,11,31,.6);border-radius:14px;padding:14px;font-size:.95rem;text-align:left;border-left:4px solid var(--gold)}
+.dyk b{color:var(--gold);font-family:var(--display);letter-spacing:.06em}
+.newb{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.newb div{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:999px;background:rgba(240,192,79,.15);border:1px solid var(--gold);font-family:var(--game);font-weight:600;font-size:.9rem}
+.row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.badges{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:100%}
+.badge{display:grid;justify-items:center;gap:4px;padding:12px 6px;border-radius:14px;background:var(--lapis-2);text-align:center;min-width:0}
+.badge b{font-family:var(--game);font-weight:600;font-size:.92rem}
+.badge small{font-size:.76rem;color:var(--muted);line-height:1.25}
+.badge.off{opacity:.5}
+.badge.off svg{filter:grayscale(1)}
+
+/* Announcer & toasts */
+.announce{position:fixed;left:50%;top:42%;z-index:85;pointer-events:none;text-align:center;transform:translate(-50%,-50%);font-family:var(--game);font-weight:700;opacity:0;width:max-content;max-width:92vw}
+.announce .a1{display:block;font-size:clamp(2.2rem,8vw,4rem);color:var(--gold-hi);-webkit-text-stroke:2px var(--gold-dark);text-shadow:0 6px 0 var(--gold-dark),0 10px 30px rgba(0,0,0,.6);line-height:1.05}
+.announce .a2{display:block;font-size:1.2rem;color:var(--ivory);text-shadow:0 2px 6px rgba(0,0,0,.8)}
+.announce.go{animation:ann 1.2s cubic-bezier(.3,1.6,.6,1) forwards}
+@keyframes ann{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}18%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}30%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-65%) scale(1)}}
+#toasts{position:fixed;z-index:90;top:calc(env(safe-area-inset-top,0px) + 74px);left:50%;transform:translateX(-50%);display:grid;gap:8px;pointer-events:none;width:min(360px,calc(100vw - 32px))}
+.toast{display:flex;gap:12px;align-items:center;padding:10px 14px;border-radius:16px;background:linear-gradient(var(--lapis-3),var(--lapis-2));border:2px solid var(--gold);box-shadow:0 10px 30px rgba(0,0,0,.5);animation:toast 3.4s ease forwards}
+.toast b{font-family:var(--game);font-weight:700;color:var(--gold-hi);display:block}
+.toast small{color:var(--muted)}
+@keyframes toast{0%{transform:translateY(-30px);opacity:0}10%{transform:none;opacity:1}85%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+.pop{position:fixed;z-index:86;font-family:var(--game);font-weight:700;color:var(--gold-hi);font-size:1.4rem;pointer-events:none;animation:pop 1s ease-out forwards;-webkit-text-stroke:1px var(--gold-dark);text-shadow:0 3px 0 var(--gold-dark)}
+@keyframes pop{0%{transform:translate(-50%,0) scale(.6);opacity:1}25%{transform:translate(-50%,-16px) scale(1.15)}100%{transform:translate(-50%,-70px) scale(1);opacity:0}}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.flashred{animation:flashred .4s}
+@keyframes flashred{50%{box-shadow:0 0 0 6px rgba(212,85,63,.6),0 18px 40px rgba(0,0,0,.4)}}
+
+/* Certificate */
+.cert{margin:30px auto 0;max-width:660px;background:linear-gradient(var(--ivory),#eadfc4);color:var(--lapis);border-radius:8px;padding:10px;box-shadow:0 24px 60px rgba(0,0,0,.55);animation:rise .6s cubic-bezier(.3,1.4,.6,1)}
+.cert-in{border:4px double var(--gold-deep);padding:30px 22px;display:grid;gap:12px;text-align:center;justify-items:center}
+.cert .orn{color:var(--gold-deep);letter-spacing:.5em}
+.cert h2{font-family:var(--display);font-size:clamp(1.8rem,5vw,2.7rem)}
+.cert .who{font-family:var(--display);font-size:clamp(1.6rem,5vw,2.4rem);color:var(--red);border-bottom:2px solid var(--gold-deep);padding:0 20px 4px}
+.cert .cs{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;font-family:var(--game);font-variant-numeric:tabular-nums}
+.cert .cs div{display:grid}
+.cert .cs small{font-family:var(--body);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--lapis-3)}
+.cert .cs b{font-size:1.5rem}
+.cert .rank{font-family:var(--game);font-weight:700;font-size:1.15rem;color:var(--gold-dark)}
+.certbadges{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+
+@media (max-width:640px){
+  .opts,.evs{grid-template-columns:1fr}
+  .match{grid-template-columns:1fr}
+  .gates{grid-template-columns:1fr}
+  .gate{grid-template-columns:auto 1fr;justify-items:start;align-items:center;text-align:left;padding:12px 16px}
+  .gate svg{width:36px;height:36px}
+  .slots{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .slots::before{display:none}
+  .stamps{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .avatars{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .badges{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stage{padding:16px}
+  .st-banner svg{width:64px;height:64px}
+  .ab{width:34px;height:44px;font-size:1.35rem}
+  .tile{width:42px;height:48px;font-size:1.45rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .announce,.toast{opacity:1}
+  .bigstars svg{opacity:1}
+}
+</style>
+
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<header class="hud" id="hud" hidden>
+  <div class="hud-in">
+    <button class="brand" id="toMap" title="Back to the map"><span id="hudTok"></span><span class="hide-sm">The Pilgrim’s Road</span></button>
+    <span class="hud-sp"></span>
+    <span class="lvl" title="Your level"><span class="lvl-n" id="lvlN">1</span><span class="lvl-t"><small id="lvlName">Wanderer</small><span class="xp"><i id="xpFill"></i></span></span></span>
+    <span class="chip">Score <b id="score">0</b></span>
+    <span class="chip combo" id="combo" title="Combo: answer correctly in a row to raise your multiplier">
+      <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M10 1C12 5 16 7 16 12C16 16 13 19 10 19C7 19 4 16 4 12C4 9 6 7 7 5C8 8 9 9 10 9C9 6 9 3 10 1Z"/></svg>
+      <b id="mult">×1</b><span class="cbar"><i id="cfill"></i></span>
+    </span>
+    <button class="iconbtn" id="badgeBtn">Badges <b id="bcount" style="color:var(--gold)">0</b></button>
+    <button class="iconbtn" id="soundBtn" aria-pressed="true">Sound on</button>
+  </div>
+</header>
+<main class="wrap" id="screen"></main>
+<div class="announce" id="announce" aria-live="polite"></div>
+<div id="toasts" aria-live="polite"></div>
+
+<script>
+/* ================= Content (from the Global Studies 7 handout) ================= */
+const ROMAN=['I','II','III','IV','V','VI'];
+const PRAISE=['Well done!','Exactly right!','You got it!','Excellent!','Spot on!','Correct!','Brilliant!'];
+const ORIGINS=[
+ {q:'What does the word <em>Christian</em> mean?',o:['Follower of Christ','Citizen of Rome','Teacher of the law','Person from Judea'],e:'A Christian is a “follower of Christ.” The faith is centered on Jesus Christ, the Son of God and Savior of the world.'},
+ {q:'When did Christianity begin?',o:['The first century AD','The fifth century BC','The fourth century AD','The tenth century AD'],e:'Christianity began in the first century AD, in the days of the Roman Empire.'},
+ {q:'Judea, where Christianity began, was a region of which empire?',o:['The Roman Empire','The Persian Empire','The Ottoman Empire','The Egyptian Empire'],e:'Judea was in the eastern Roman Empire, in present-day Israel and the Palestinian territories.'},
+ {q:'In which town was Jesus born?',o:['Bethlehem','Nazareth','Rome','Athens'],e:'Jesus was born in Bethlehem, grew up in Nazareth, and taught throughout Galilee and Judea.'},
+ {q:'In which town did Jesus grow up?',o:['Nazareth','Bethlehem','Jerusalem','Damascus'],e:'Jesus grew up in Nazareth, in the region of Galilee.'},
+ {q:'Which three things are the foundation of the Christian faith?',o:['Jesus’ life, death, and resurrection','Jesus’ birth, baptism, and travels','The flood, the exodus, and the exile','Pentecost, the Schism, and the Reformation'],e:'Jesus’ life, death, and resurrection are the foundation of the Christian faith.'},
+ {q:'What happened at Pentecost (Acts 2)?',o:['The Holy Spirit empowered the early Church','Constantine made Christianity legal','Martin Luther began the Reformation','The Church split into East and West'],e:'After Jesus rose and ascended to heaven, the Holy Spirit empowered the early Church at Pentecost, and the apostles preached the Gospel.'},
+ {q:'From which city did Christianity first spread across the Roman Empire?',o:['Jerusalem','Rome','Alexandria','Babylon'],e:'Christianity spread from Jerusalem across the Roman Empire and eventually throughout the world.'},
+ {q:'What do Christians call the Hebrew Scriptures?',o:['The Old Testament','The New Testament','The Gospels','The Creed'],e:'Christianity arose in a Jewish setting. Jesus and the first apostles were Jews, and Christians accept the Hebrew Scriptures as the Old Testament.'}
+];
+const BELIEFS=[
+ {t:'One God, three Persons',d:'The Trinity: Father, Son, and Holy Spirit',r:'Matthew 28:19',v:'Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit.'},
+ {t:'God the Creator',d:'God made the heavens, the earth, and people in His image',r:'Genesis 1:1',v:'In the beginning God created the heavens and the earth.'},
+ {t:'Jesus Christ',d:'Fully God and fully human',r:'John 1:14',v:'The Word became flesh and made His dwelling among us.'},
+ {t:'Sin and salvation',d:'Jesus died for sinners and rose bodily from the dead',r:'1 Corinthians 15:3–4',v:'…that Christ died for our sins according to the Scriptures, that He was buried, that He was raised on the third day according to the Scriptures.'},
+ {t:'Grace, faith, and new life',d:'Salvation is a gift, not something people earn',r:'Ephesians 2:8',v:'For it is by grace you have been saved through faith, and this not from yourselves; it is the gift of God.'},
+ {t:'The Bible',d:'The Old and New Testaments are Holy Scripture',r:'2 Timothy 3:16',v:'All Scripture is God-breathed and is useful for instruction, for conviction, for correction, and for training in righteousness.'},
+ {t:'Future hope',d:'Christians await Jesus’ return',r:'Acts 1:11',v:'This same Jesus, who has been taken from you into heaven, will come back in the same way you have seen Him go into heaven.'}
+];
+const BR=[{k:'cat',n:'Roman Catholic',c:'#d4553f'},{k:'orth',n:'Eastern Orthodox',c:'#f0c04f'},{k:'prot',n:'Protestant',c:'#93b956'}];
+const BREX={
+ cat:'The Roman Catholic Church is led by the pope, the bishop of Rome. It emphasizes Scripture and Sacred Tradition, the Church’s teaching authority, and seven sacraments, and its worship centers on the Mass.',
+ orth:'The Eastern Orthodox Churches are a family of self-governing churches, like the Greek and Russian Orthodox. They emphasize ancient worship, Holy Tradition, icons, and the Divine Liturgy, and do not recognize the pope’s universal authority.',
+ prot:'Protestant churches came from the sixteenth-century Reformation. They emphasize the Bible as the final authority and salvation by God’s grace through faith in Christ.'
+};
+const BRANCH_CARDS=[
+ {t:'Led by the pope, the bishop of Rome.',k:'cat'},
+ {t:'Has seven sacraments.',k:'cat'},
+ {t:'Its worship commonly centers on the Mass (Eucharist).',k:'cat'},
+ {t:'Emphasizes Sacred Tradition and the teaching authority of the Church.',k:'cat'},
+ {t:'A family of self-governing churches.',k:'orth'},
+ {t:'Includes the Greek and Russian churches.',k:'orth'},
+ {t:'Known for icons and the Divine Liturgy.',k:'orth'},
+ {t:'Does not recognize the pope’s universal authority, and keeps the continuity of ancient worship.',k:'orth'},
+ {t:'Emerged from the sixteenth-century Reformation.',k:'prot'},
+ {t:'Holds the Bible as the final authority for Christian doctrine.',k:'prot'},
+ {t:'Includes Lutheran, Baptist, Methodist, and Pentecostal churches.',k:'prot'},
+ {t:'Reformed and Presbyterian churches belong to this branch.',k:'prot'}
+];
+const EVENTS=[
+ {y:'c. AD 30',t:'Jesus’ crucifixion and resurrection; the Church begins spreading the Gospel',s:'Crucifixion & resurrection'},
+ {y:'AD 313',t:'Emperor Constantine legalizes Christianity in the Roman Empire',s:'Constantine legalizes Christianity'},
+ {y:'AD 1054',t:'The Great Schism between Eastern and Western Christianity',s:'The Great Schism'},
+ {y:'AD 1517',t:'Martin Luther’s actions help begin the Protestant Reformation',s:'The Reformation begins'}
+];
+const VOCAB=[
+ {w:'GOSPEL',c:'Good news about Jesus Christ',x:'The apostles preached the Gospel, the “good news,” after Jesus rose and ascended.'},
+ {w:'APOSTLE',c:'A messenger sent by Christ',x:'Jesus’ first apostles were Jews who carried His message from Jerusalem outward.'},
+ {w:'DOCTRINE',c:'An official religious teaching',x:'Disagreements about certain doctrines helped form the different branches of Christianity.'},
+ {w:'CHURCH',c:'Christ’s people, and also a place where they gather',x:'The Church is the worldwide community of Christ’s followers.'},
+ {w:'TRINITY',c:'One God eternally existing as Father, Son, and Holy Spirit',x:'Christians worship one God in three Persons (Matthew 28:19).'},
+ {w:'GRACE',c:'God’s free gift: salvation that no one can earn',x:'“For it is by grace you have been saved through faith” (Ephesians 2:8).'}
+];
+const TF=[
+ {s:'Christians believe in one God who exists as three Persons.',a:true,e:'This is the Trinity: Father, Son, and Holy Spirit.'},
+ {s:'Christians believe Jesus was only a wise human teacher.',a:false,e:'Christians believe Jesus is fully God and fully human.'},
+ {s:'In Christian teaching, people can earn salvation by being good enough.',a:false,e:'Salvation is a gift of God’s grace, not something people can earn.'},
+ {s:'Emperor Constantine legalized Christianity in AD 313.',a:true,e:'Constantine legalized Christianity in the Roman Empire in 313.'},
+ {s:'The Eastern Orthodox Churches are led by the pope.',a:false,e:'They are self-governing and do not recognize the pope’s universal authority.'},
+ {s:'Christians practice baptism and the Lord’s Supper.',a:true,e:'Both are practiced across the Church (1 Corinthians 11:23–26).'},
+ {s:'Christianity arose in a Jewish setting.',a:true,e:'Jesus and the first apostles were Jews.'},
+ {s:'Today, Christians live on only two continents.',a:false,e:'Christians live on every inhabited continent.'},
+ {s:'Christianity has influenced art, music, laws, and even calendars.',a:true,e:'It shaped art, music, architecture, literature, education, charity, laws, and calendars.'},
+ {s:'Christians believe Jesus rose bodily from the dead.',a:true,e:'His resurrection is a foundation of the faith (1 Corinthians 15:3–4).'},
+ {s:'The Protestant Reformation began in the tenth century.',a:false,e:'It began in the sixteenth century, in 1517.'},
+ {s:'Christians await Jesus’ return, the resurrection, and final judgment.',a:true,e:'This is the Christian future hope (Acts 1:11).'}
+];
+const STATIONS=[
+ {id:'origins',place:'Bethlehem',topic:'Where it began',title:'Where Did Christianity Begin?',instr:'Answer each question about the beginnings of Christianity. Keep a streak going to raise your combo.',run:b=>mcGame(ORIGINS,b),total:ORIGINS.length,dyk:'Christianity began in Judea, in the eastern Roman Empire, and spread from Jerusalem across the empire and eventually throughout the world.',limits:[0,2]},
+ {id:'beliefs',place:'The Creed Hall',topic:'What Christians believe',title:'What Do Christians Believe?',instr:'Tap a belief, then tap the Bible verse that teaches it. Match all seven pairs.',run:b=>matchGame(b),total:BELIEFS.length,dyk:'Across its major historic branches, Christianity shares central teachings: the Trinity, creation, Jesus Christ, salvation by grace, the Bible, the Church, and the hope of Jesus’ return.',limits:[0,2]},
+ {id:'branches',place:'The Three Roads',topic:'Branches of Christianity',title:'The Three Major Branches',instr:'Read each card and send it down the right road: Roman Catholic, Eastern Orthodox, or Protestant.',run:b=>sortGame(b),total:BRANCH_CARDS.length,dyk:'Christians share a common origin and many essential beliefs, but disagreements about church authority, worship, and certain doctrines led to distinct traditions.',limits:[1,3]},
+ {id:'timeline',place:'The Road of Years',topic:'Historical timeline',title:'A Brief Historical Timeline',instr:'Round 1: put the events in order from earliest to latest. Round 2: match each event to its year.',run:b=>timelineGame(b),total:EVENTS.length*2,dyk:'AD 1054 is the traditional date associated with the Great Schism, when Eastern and Western Christianity divided.',limits:[0,2]},
+ {id:'vocab',place:'The Scriptorium',topic:'Key vocabulary',title:'The Scriptorium',instr:'Read the clue, then tap the letter tiles to spell the word. A hint helps, but it counts as a mistake.',run:b=>vocabGame(b),total:VOCAB.length,dyk:'An apostle is a messenger sent by Christ, and the Gospel they carried means “good news.”',limits:[0,2]},
+ {id:'trial',place:'The Great Gate',topic:'Final trial',title:'The Final Trial',instr:'Break the 10 seals on the Great Gate! True or false: you have 10 seconds for each statement. Answer fast for bonus points.',run:b=>lightningGame(b),total:10,dyk:'Churches and cathedrals are landmarks in many countries, and the faith is expressed today through many languages and local cultures.',limits:[1,3]}
+];
+const LEVELS=[[0,'Wanderer'],[600,'Traveler'],[1500,'Seeker'],[3000,'Scholar'],[5000,'Scribe'],[7500,'Master Pilgrim']];
+const AVATARS=[{id:'fish',n:'Fish',c:'#3d7bd9'},{id:'star',n:'Star',c:'#d4553f'},{id:'anchor',n:'Anchor',c:'#2f8f83'},{id:'lamp',n:'Lamp',c:'#c7862a'},{id:'crown',n:'Crown',c:'#8a4fc2'},{id:'shield',n:'Shield',c:'#4f8a3a'}];
+const BADGES=[
+ {id:'first',n:'First Steps',d:'Finish your first station',ic:'path'},
+ {id:'perfect',n:'Flawless',d:'Earn 3 stars at any station',ic:'star'},
+ {id:'streak5',n:'On Fire',d:'Get 5 right in a row',ic:'flame'},
+ {id:'streak10',n:'Unstoppable',d:'Get 10 right in a row',ic:'flame'},
+ {id:'nohint',n:'Master Scribe',d:'Finish the Scriptorium with no hints',ic:'book'},
+ {id:'speed',n:'Quick Draw',d:'Answer correctly in the Trial in under 2 seconds',ic:'bolt'},
+ {id:'gate',n:'Gate Breaker',d:'Break all the seals on the Great Gate',ic:'gate'},
+ {id:'all',n:'Whole Road',d:'Complete all six stations',ic:'shield'},
+ {id:'allstars',n:'Golden Road',d:'Earn all 18 stars',ic:'crown'}
+];
+
+/* ================= Art helpers ================= */
+function starPath(cx,cy,R,r,n){let d='';for(let k=0;k<n*2;k++){const a=-Math.PI/2+k*Math.PI/n,rad=k%2?r:R;d+=(k?'L':'M')+(cx+Math.cos(a)*rad).toFixed(1)+' '+(cy+Math.sin(a)*rad).toFixed(1)+' '}return d+'Z'}
+const GLYPH={
+ fish:'<path d="M8 14C15 27 26 28 33 20C26 12 15 13 8 26"/>',
+ star:`<path d="${starPath(20,21,11,4.6,5)}" fill="#fff" stroke="none"/>`,
+ anchor:'<circle cx="20" cy="9.5" r="3"/><path d="M20 12.5V32M14 16H26M10 24C11 30 16 32.5 20 32.5C24 32.5 29 30 30 24"/>',
+ lamp:'<path d="M9 25C9 21 14 19 21 19H29C32 19 33 21 31 23L28 25Z"/><path d="M14 29H25"/><path d="M29.5 16.5C27.5 13 29.5 10 30.5 8C32.5 11 33.5 14 29.5 16.5Z" fill="#fff" stroke="none"/>',
+ crown:'<path d="M9 27V14L15 20L20 10L25 20L31 14V27Z"/><path d="M9 31H31"/>',
+ shield:'<path d="M20 7L31 11V20C31 27 25 31 20 33C15 31 9 27 9 20V11Z"/><path d="M20 13V27M15 18H25"/>',
+ path:'<path d="M8 32C14 26 12 20 20 18C28 16 26 10 32 8" stroke-dasharray="3 4"/><circle cx="32" cy="8" r="2.5" fill="#fff"/>',
+ flame:'<path d="M20 6C23 12 29 14 29 22C29 28 25 33 20 33C15 33 11 28 11 22C11 17 14 14 16 11C17 15 18 17 20 17C19 13 19 9 20 6Z" fill="#fff" stroke="none"/>',
+ book:'<path d="M20 13C16 10 11 10 8 11V29C11 28 16 28 20 31C24 28 29 28 32 29V11C29 10 24 10 20 13ZM20 13V31"/>',
+ bolt:'<path d="M22 6L11 22H19L17 34L29 17H21Z" fill="#fff" stroke="none"/>',
+ gate:'<path d="M10 32V18C10 7 30 7 30 18V32ZM20 10V32M8 32H32"/>'
+};
+function tokenInner(id){const a=AVATARS.find(x=>x.id===id)||AVATARS[0];return `<circle cx="20" cy="20" r="18.5" fill="${a.c}" stroke="#f6eedb" stroke-width="2.5"/><circle cx="20" cy="20" r="15" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1"/><g fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${GLYPH[a.id]}</g>`}
+function token(id,size=40){return `<svg viewBox="0 0 40 40" width="${size}" height="${size}" aria-hidden="true">${tokenInner(id)}</svg>`}
+function badgeIcon(b,on,size=44){return `<svg viewBox="0 0 40 40" width="${size}" height="${size}" aria-hidden="true"><path d="M13 30L10 39L16 36L20 39L22 31Z M27 30L30 39L24 36L20 39L18 31Z" fill="${on?'#d4553f':'#3a4566'}"/><circle cx="20" cy="18" r="16" fill="${on?'#b8862a':'#2a3658'}" stroke="${on?'#ffe08a':'#4a5675'}" stroke-width="2"/><g transform="translate(20 18) scale(.62) translate(-20 -20)" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="${on?1:.45}">${GLYPH[b.ic]}</g></svg>`}
+const LANDMARK=[
+ `<path d="${starPath(0,-8,10,3.6,8)}" fill="currentColor" stroke="none"/><path d="M-17 17V9L-11 4L-5 9V17M-3 17V7L4 1L11 7V17M-19 17H19"/>`,
+ `<path d="M-17 -5L0 -15L17 -5Z" fill="currentColor"/><path d="M-12 -1V12M-4 -1V12M4 -1V12M12 -1V12M-18 15H18"/>`,
+ `<path d="M0 -16V17M-8 17H8"/><path d="M1 -14H13L17 -10.5L13 -7H1ZM-1 -4H-13L-17 -0.5L-13 3H-1ZM1 6H11L14.5 9.5L11 13H1Z" fill="currentColor" stroke="none"/>`,
+ `<path d="M-11 -15H11M-11 15H11M-8 -15C-8 -6 -2 -3 -1.5 0C-2 3 -8 6 -8 15M8 -15C8 -6 2 -3 1.5 0C2 3 8 6 8 15"/><path d="M-5 -10H5L0 -3ZM-6 13C-3 8 3 8 6 13Z" fill="currentColor" stroke="none"/>`,
+ `<path d="M0 -4C-5 -8 -12 -8 -17 -6V12C-12 10 -5 10 0 14C5 10 12 10 17 12V-6C12 -8 5 -8 0 -4ZM0 -4V14"/><path d="M6 -10L16 -20" /><path d="M16 -20C12 -19 9 -16 8 -12L11 -13Z" fill="currentColor"/>`,
+ `<path d="M-15 17V-1C-15 -13 15 -13 15 -1V17Z"/><path d="M0 -10V17M-18 17H18"/><circle cx="-4" cy="5" r="1.6" fill="currentColor"/><circle cx="4" cy="5" r="1.6" fill="currentColor"/>`
+];
+const LOCK=`<rect x="-9" y="-2" width="18" height="15" rx="3" fill="currentColor" stroke="none"/><path d="M-5.5 -2V-7C-5.5 -12 5.5 -12 5.5 -7V-2"/>`;
+function medallion(i,size=84,done=false){return `<svg viewBox="-44 -44 88 88" width="${size}" height="${size}" aria-hidden="true"><circle r="42" fill="#b8862a" stroke="#f0c04f" stroke-width="3" stroke-dasharray="6 3"/><circle r="35" fill="${done?'#f0c04f':'#22396e'}" stroke="#6e4d12" stroke-width="2"/><g fill="none" stroke="${done?'#0f1d3d':'#f6eedb'}" color="${done?'#0f1d3d':'#f6eedb'}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${LANDMARK[i]}</g></svg>`}
+function starSvg(on){return `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="${starPath(20,21,18,8,5)}" fill="${on?'#ffe08a':'#2a3658'}" stroke="${on?'#b8862a':'#4a5675'}" stroke-width="2.5" stroke-linejoin="round"/></svg>`}
+
+/* ================= State ================= */
+const $=s=>document.querySelector(s);
+const screen=$('#screen');
+const KEY='pilgrims-road-v2';
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||localStorage.getItem('pilgrims-road-v1')||'null')}catch(e){return null}}
+let S=Object.assign({name:'',avatar:'fish',best:{},stars:{},badges:{},streak:0,maxLevel:0,unlockAll:false,sound:true},load()||{});
+if(!S.badges)S.badges={};if(!S.avatar)S.avatar='fish';
+if(typeof S.maxLevel!=='number'){S.maxLevel=0;for(const k in S.best)S.maxLevel+=S.best[k];S.maxLevel=[0,600,1500,3000,5000,7500].filter(t=>S.maxLevel>=t).length-1}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+let RUN=null,TIMERS=[],TOK_AT=null,DONE_AT=null;
+function stopTimers(){TIMERS.forEach(clearInterval);TIMERS=[]}
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function sumBest(){let t=0;for(const k in S.best)t+=S.best[k];return t}
+function totalScore(){return sumBest()+(RUN?Math.max(0,RUN.earned-(S.best[RUN.id]||0)):0)}
+function levelOf(sc){let l=0;LEVELS.forEach((x,i)=>{if(sc>=x[0])l=i});return l}
+function mult(){return 1+Math.min(3,Math.floor(S.streak/3))}
+function hud(){
+  const sc=totalScore(),l=levelOf(sc);
+  $('#hudTok').innerHTML=token(S.avatar,30);
+  $('#score').textContent=sc.toLocaleString();
+  $('#lvlN').textContent=l+1;$('#lvlName').textContent=LEVELS[l][1];
+  const lo=LEVELS[l][0],hi=LEVELS[l+1]?LEVELS[l+1][0]:lo;$('#xpFill').style.width=(hi>lo?Math.min(100,(sc-lo)/(hi-lo)*100):100)+'%';
+  const m=mult();$('#mult').textContent='×'+m;$('#cfill').style.width=(m>=4?100:(S.streak%3)/3*100)+'%';
+  const c=$('#combo');c.classList.toggle('warm',m>=2);c.classList.toggle('hot',m>=3);
+  $('#bcount').textContent=Object.keys(S.badges).length+'/'+BADGES.length;
+  const sb=$('#soundBtn');sb.textContent=S.sound?'Sound on':'Sound off';sb.setAttribute('aria-pressed',S.sound);
+  if(l>S.maxLevel){S.maxLevel=l;save();setTimeout(()=>{announce('Level up!',LEVELS[l][1]);sfx.level();confetti(90)},350)}
+}
+
+/* ================= Sound ================= */
+let AC=null;
+function tone(f,d=.12,type='triangle',when=0,vol=.08){
+  if(!S.sound)return;
+  try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;const t=AC.currentTime+when;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.03)}catch(e){}
+}
+const sfx={
+ good(){const k=1+Math.min(S.streak,8)*.06;tone(660*k);tone(990*k,.18,'triangle',.07)},
+ bad(){tone(170,.25,'sawtooth',0,.045);tone(130,.25,'sawtooth',.08,.04)},
+ tap(f=440){tone(f,.05,'sine',0,.06)},
+ win(){[523,659,784,1047].forEach((f,i)=>tone(f,.3,'triangle',i*.11))},
+ level(){[392,523,659,784,1047,1319].forEach((f,i)=>tone(f,.22,'square',i*.08,.04))},
+ chest(){tone(220,.3,'sawtooth',0,.03);[784,988,1175,1568].forEach((f,i)=>tone(f,.35,'sine',.15+i*.07,.07))},
+ badge(){[880,1175,1760].forEach((f,i)=>tone(f,.25,'sine',i*.09,.07))},
+ tick(){tone(1200,.04,'square',0,.03)},
+ step(){tone(260+Math.random()*80,.04,'square',0,.018)}
+};
+
+/* ================= FX: particles, announcer, toasts ================= */
+const FX={c:$('#fx'),x:null,P:[],run:false};
+function fxSize(){const d=window.devicePixelRatio||1;FX.c.width=innerWidth*d;FX.c.height=innerHeight*d;FX.x=FX.c.getContext('2d');FX.x.setTransform(d,0,0,d,0,0)}
+const COLS=['#f0c04f','#ffe08a','#d4553f','#93b956','#f6eedb','#4f74c4'];
+function fxLoop(){
+  const x=FX.x;x.clearRect(0,0,innerWidth,innerHeight);
+  FX.P=FX.P.filter(p=>p.life>0);
+  for(const p of FX.P){p.vy+=p.g;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.life--;
+    x.globalAlpha=Math.min(1,p.life/25);x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;
+    if(p.star){x.beginPath();for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,rr=k%2?p.s*.4:p.s;x.lineTo(Math.cos(a)*rr,Math.sin(a)*rr)}x.closePath();x.fill()}
+    else x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.8);x.restore()}
+  x.globalAlpha=1;
+  if(FX.P.length)requestAnimationFrame(fxLoop);else{FX.run=false;x.clearRect(0,0,innerWidth,innerHeight)}
+}
+function addP(arr){if(reduced())return;if(!FX.x)fxSize();FX.P.push(...arr);if(!FX.run){FX.run=true;requestAnimationFrame(fxLoop)}}
+function burst(el,n=26){if(!el)return;const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+  addP(Array.from({length:n},()=>{const a=Math.random()*Math.PI*2,v=2+Math.random()*6;return{x:cx,y:cy,vx:Math.cos(a)*v,vy:Math.sin(a)*v-2,g:.2,s:4+Math.random()*6,r:Math.random()*6,vr:(Math.random()-.5)*.3,c:pick(COLS),life:40+Math.random()*25,star:Math.random()<.35}}))}
+function confetti(n=170){addP(Array.from({length:n},()=>({x:Math.random()*innerWidth,y:-20-Math.random()*innerHeight*.5,vx:(Math.random()-.5)*2,vy:2+Math.random()*3,g:.04,s:6+Math.random()*8,r:Math.random()*6,vr:(Math.random()-.5)*.2,c:pick(COLS),life:180+Math.random()*80,star:Math.random()<.25})))}
+let annT;
+function announce(a,b=''){const el=$('#announce');el.innerHTML=`<span class="a1">${a}</span>${b?`<span class="a2">${b}</span>`:''}`;el.classList.remove('go');void el.offsetWidth;el.classList.add('go');clearTimeout(annT);annT=setTimeout(()=>el.classList.remove('go'),1300)}
+function toast(icon,title,sub){const t=document.createElement('div');t.className='toast';t.innerHTML=`${icon}<div><b>${title}</b><small>${sub}</small></div>`;$('#toasts').appendChild(t);setTimeout(()=>t.remove(),3500)}
+function award(id){if(S.badges[id])return;S.badges[id]=Date.now();save();const b=BADGES.find(x=>x.id===id);if(RUN)RUN.newBadges.push(id);
+  toast(badgeIcon(b,true,40),'Badge unlocked: '+b.n,b.d);sfx.badge();hud()}
+function popAt(el,text){const r=el.getBoundingClientRect();const p=document.createElement('div');p.className='pop';p.textContent=text;p.style.left=(r.left+r.width/2)+'px';p.style.top=(r.top-4)+'px';document.body.appendChild(p);setTimeout(()=>p.remove(),1000)}
+
+/* ================= Scoring ================= */
+const STREAK_CALLS={3:['Nice!','Combo ×2'],5:['Amazing!','5 in a row'],6:['On fire!','Combo ×3'],9:['Unstoppable!','Combo ×4'],12:['Legendary!','12 in a row'],15:['Incredible!','15 in a row']};
+function good(el,bonus=0){
+  const m=mult(),pts=100*m+bonus;
+  RUN.earned+=pts;S.streak++;RUN.right++;
+  sfx.good();popAt(el,'+'+pts);burst(el);
+  if(STREAK_CALLS[S.streak]){const c=STREAK_CALLS[S.streak];announce(c[0],c[1])}
+  if(S.streak>=5)award('streak5');if(S.streak>=10)award('streak10');
+  setProgress();hud();save();
+}
+function bad(el){
+  S.streak=0;RUN.mistakes++;sfx.bad();
+  if(el&&!reduced()){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake')}
+  const f=$('.frame');if(f&&!reduced()){f.classList.remove('flashred');void f.offsetWidth;f.classList.add('flashred')}
+  const mn=$('#missN');if(mn)mn.textContent=RUN.mistakes;hud();save();
+}
+function setProgress(){const s=STATIONS[RUN.i],p=Math.min(1,RUN.right/s.total)*100;const f=$('.track-fill'),t=$('.track-tok');if(f)f.style.width=p+'%';if(t)t.style.left=p+'%'}
+
+/* ================= Background mosaic ================= */
+function drawBg(){
+  const c=$('#bg'),x=c.getContext('2d'),d=window.devicePixelRatio||1,W=innerWidth,H=innerHeight;
+  c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);x.fillStyle='#0a1430';x.fillRect(0,0,W,H);
+  const s=22,j=()=>(Math.random()-.5)*2.6;
+  for(let yy=0;yy<H+s;yy+=s)for(let xx=0;xx<W+s;xx+=s){
+    const r=Math.random();
+    x.fillStyle=r<.03?'rgba(240,192,79,.55)':r<.045?'rgba(212,85,63,.45)':`hsl(${220+Math.random()*12},${42+Math.random()*16}%,${13+Math.random()*8}%)`;
+    x.beginPath();x.moveTo(xx+1+j(),yy+1+j());x.lineTo(xx+s-2+j(),yy+1+j());x.lineTo(xx+s-2+j(),yy+s-2+j());x.lineTo(xx+1+j(),yy+s-2+j());x.closePath();x.fill();
+  }
+}
+let rsT,lastNarrow=innerWidth<640;
+addEventListener('resize',()=>{clearTimeout(rsT);rsT=setTimeout(()=>{drawBg();fxSize();const n=innerWidth<640;if(n!==lastNarrow&&screen.dataset.view==='map'){lastNarrow=n;renderMap()}lastNarrow=n},200)});
+
+/* ================= Overlays ================= */
+function overlay(html){const o=document.createElement('div');o.className='overlay';o.innerHTML=html;document.body.appendChild(o);
+  o.addEventListener('keydown',e=>{if(e.key==='Escape'&&o.dataset.esc)o.remove()});return o}
+function showBadges(){
+  const o=overlay(`<div class="panel modal" role="dialog" aria-modal="true" aria-labelledby="bt" style="width:min(560px,100%)">
+    <h2 id="bt">Badges</h2><p class="sub">${Object.keys(S.badges).length} of ${BADGES.length} unlocked</p>
+    <div class="badges">${BADGES.map(b=>{const on=!!S.badges[b.id];return `<div class="badge ${on?'':'off'}">${badgeIcon(b,on,52)}<b>${b.n}</b><small>${b.d}</small></div>`}).join('')}</div>
+    <button class="btn primary" id="bclose">Close</button></div>`);
+  o.dataset.esc=1;const b=o.querySelector('#bclose');b.onclick=()=>o.remove();b.focus();
+  o.addEventListener('click',e=>{if(e.target===o)o.remove()});
+}
+
+/* ================= Title ================= */
+function renderTitle(){
+  stopTimers();RUN=null;screen.dataset.view='title';$('#hud').hidden=true;
+  const motes=Array.from({length:18},()=>`<span style="left:${Math.random()*100}%;top:${40+Math.random()*60}%;animation-delay:${(Math.random()*7).toFixed(1)}s"></span>`).join('');
+  screen.innerHTML=`
+  <section class="title-screen">
+    <div class="motes" aria-hidden="true">${motes}</div>
+    <svg class="crest" viewBox="-60 -60 120 120" aria-hidden="true">
+      <circle r="56" fill="#b8862a" stroke="#f0c04f" stroke-width="4" stroke-dasharray="8 4"/>
+      <circle r="46" fill="#172a55" stroke="#6e4d12" stroke-width="2"/>
+      <path d="M-30 30C-16 10 -20 -6 0 -10C20 -14 16 -30 30 -36" fill="none" stroke="#f0c04f" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 9"/>
+      <path d="${starPath(28,-34,11,4.4,8)}" fill="#ffe08a"/>
+      <g transform="translate(-36 6) scale(.9)">${tokenInner(S.avatar)}</g>
+    </svg>
+    <p class="eyebrow">Global Studies 7 · World Religions &amp; Cultures</p>
+    <h1 class="big">The Pilgrim’s Road</h1>
+    <p class="lede">Travel six stations from Bethlehem to the Great Gate. Learn the story, beliefs, branches, and history of Christianity, collect stars and badges, and level up to Master Pilgrim.</p>
+    <form class="panel start-panel" id="startForm">
+      <div style="display:grid;gap:8px"><label class="flabel" for="pname">Your name</label>
+      <input type="text" id="pname" maxlength="24" autocomplete="off" placeholder="Type your first name" value="${esc(S.name)}"></div>
+      <fieldset style="border:0;padding:0;margin:0;display:grid;gap:8px"><legend class="flabel" style="padding:0;margin-bottom:8px">Choose your pilgrim token</legend>
+      <div class="avatars">${AVATARS.map(a=>`<label class="av"><input type="radio" name="av" id="av-${a.id}" value="${a.id}" ${S.avatar===a.id?'checked':''}>${token(a.id,52)}<span>${a.n}</span></label>`).join('')}</div></fieldset>
+      <ul class="how">
+        <li>${token('star',18)}<span>Six stations, six kinds of challenge: quiz, matching, sorting, timeline, word tiles, and a boss gate.</span></li>
+        <li>${token('lamp',18)}<span>Answer right in a row to grow your combo up to ×4 points.</span></li>
+        <li>${token('crown',18)}<span>Fewer mistakes earn more stars. Open a treasure chest after every station.</span></li>
+      </ul>
+      <button class="btn primary huge" type="submit">${Object.keys(S.stars).length?'Continue the journey':'Begin the journey'}</button>
+    </form>
+  </section>`;
+  screen.querySelectorAll('input[name=av]').forEach(r=>r.onchange=()=>{S.avatar=r.value;sfx.tap(520+AVATARS.findIndex(a=>a.id===r.value)*60);
+    screen.querySelector('.crest g').innerHTML=tokenInner(S.avatar)});
+  $('#startForm').onsubmit=e=>{e.preventDefault();S.name=$('#pname').value.trim().slice(0,24)||'Pilgrim';save();sfx.win();renderMap()};
+}
+
+/* ================= Map ================= */
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function hill(W,H,base,amp,seed){const R=rng(seed);const p1=R()*6,p2=R()*6,f1=1.4+R()*2,f2=3+R()*3;let d=`M0 ${H} L0 ${base}`;
+  for(let x=0;x<=W;x+=W/40){const y=base+Math.sin(x/W*Math.PI*f1+p1)*amp+Math.sin(x/W*Math.PI*f2+p2)*amp*.4;d+=` L${x.toFixed(1)} ${y.toFixed(1)}`}return d+` L${W} ${H} Z`}
+function unlocked(i){return S.unlockAll||i===0||!!S.stars[STATIONS[i-1].id]}
+function renderMap(){
+  stopTimers();RUN=null;screen.dataset.view='map';$('#hud').hidden=false;hud();
+  const narrow=innerWidth<640;lastNarrow=narrow;
+  const W=narrow?400:1000,H=narrow?880:600;
+  const P=narrow?[[105,110],[295,240],[105,370],[295,500],[105,630],[290,770]]:[[115,440],[275,215],[445,420],[610,200],[775,415],[900,205]];
+  let d=`M ${P[0][0]} ${P[0][1]}`;
+  for(let i=1;i<P.length;i++){const a=P[i-1],b=P[i];
+    d+=narrow?` C ${a[0]} ${(a[1]+b[1])/2}, ${b[0]} ${(a[1]+b[1])/2}, ${b[0]} ${b[1]}`:` C ${(a[0]+b[0])/2} ${a[1]}, ${(a[0]+b[0])/2} ${b[1]}, ${b[0]} ${b[1]}`}
+  const R=rng(7);
+  const sky=Array.from({length:narrow?55:80},(_,k)=>{const x=R()*W,y=R()*H*(narrow?.3:.38),r=.6+R()*1.6;return `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(1)}" fill="#f6eedb" ${k%3?'':`class="twinkle" style="animation-delay:${(R()*3).toFixed(1)}s"`}/>`}).join('');
+  const hills=[['#16305e',.36],['#132a52',.52],['#102446',.68],['#0d1d3b',.84]].map((h,k)=>`<path d="${hill(W,H,H*h[1],narrow?18:26,11+k*5)}" fill="${h[0]}"/>`).join('');
+  const trees=Array.from({length:narrow?16:22},()=>{const x=R()*W,y=H*(.45+R()*.5),s=.7+R()*.6;if(P.some(p=>Math.hypot(p[0]-x,p[1]-y)<90))return '';
+    return `<g transform="translate(${x.toFixed(0)} ${y.toFixed(0)}) scale(${s.toFixed(2)})"><path d="M0 0V14" stroke="#3a2d1c" stroke-width="3"/><ellipse cx="0" cy="-4" rx="11" ry="9" fill="#2c4a3b"/><ellipse cx="-4" cy="-7" rx="6" ry="5" fill="#3b5f45"/></g>`}).join('');
+  const moon=narrow?[345,48]:[70,72];
+  const doneN=STATIONS.filter(s=>S.stars[s.id]).length;
+  const nextI=STATIONS.findIndex((s,i)=>!S.stars[s.id]&&unlocked(i));
+  const nodes=STATIONS.map((s,i)=>{const [x,y]=P[i];const st=S.stars[s.id]||0;const lk=!unlocked(i);
+    const cls=['node',st?'done':'',lk?'locked':'',i===nextI?'next':''].join(' ');
+    return `<g transform="translate(${x} ${y})"><g class="${cls}" data-i="${i}" role="button" tabindex="${lk?-1:0}" aria-label="Station ${ROMAN[i]}: ${s.place}, ${s.topic}${lk?' (locked)':st?`, ${st} of 3 stars`:''}">
+      <circle class="halo" r="52"/>
+      <circle class="rim" r="40"/><circle class="medal" r="33"/>
+      <g class="lm" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${lk?LOCK:LANDMARK[i]}</g>
+      <g transform="translate(29 -29)"><circle class="numb" r="12"/><text class="numt">${ROMAN[i]}</text></g>
+      ${[-17,0,17].map((sx,k)=>`<path class="sstar ${k<st?'on':''}" d="${starPath(sx,52,8,3.4,5)}"/>`).join('')}
+      <rect class="plaque" x="-86" y="64" width="172" height="42" rx="10"/>
+      <text class="nlabel" y="82">${s.place}</text><text class="ntopic" y="98">${s.topic}</text>
+    </g></g>`}).join('');
+  const allDone=doneN===STATIONS.length;
+  screen.innerHTML=`
+  <section class="map-head">
+    <div><p class="eyebrow">${esc(S.name||'Pilgrim')}’s journey · ${doneN} of 6 stations</p>
+    <h2>${allDone?'The road is complete!':doneN?'Onward, pilgrim!':'Your journey begins'}</h2>
+    <p>${allDone?'Claim your Pilgrim’s Seal, or replay stations to earn every star.':'Tap the glowing medallion to enter the next station.'}</p></div>
+    ${nextI>=0?`<button class="btn primary" id="goNext">Play Station ${ROMAN[nextI]}</button>`:allDone?`<button class="btn primary" id="sealTop">Claim your Seal</button>`:''}
+  </section>
+  <div class="mapframe"><div class="mapbox"><svg viewBox="0 0 ${W} ${H}" role="group" aria-label="Map of the six stations">
+    <defs><linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#081230"/><stop offset=".45" stop-color="#1b3467"/><stop offset="1" stop-color="#0d1d3b"/></linearGradient>
+    <radialGradient id="moong"><stop offset="0" stop-color="#ffe08a" stop-opacity=".45"/><stop offset="1" stop-color="#ffe08a" stop-opacity="0"/></radialGradient></defs>
+    <rect width="${W}" height="${H}" fill="url(#skyg)"/>
+    ${sky}
+    <circle cx="${moon[0]}" cy="${moon[1]}" r="60" fill="url(#moong)"/><circle cx="${moon[0]}" cy="${moon[1]}" r="22" fill="#f6eedb"/><circle cx="${moon[0]+9}" cy="${moon[1]-6}" r="19" fill="#0f2044"/>
+    ${hills}${trees}
+    <path d="${d}" fill="none" stroke="#2a2114" stroke-width="30" stroke-linecap="round" opacity=".55"/>
+    <path id="road" d="${d}" fill="none" stroke="#a88553" stroke-width="22" stroke-linecap="round"/>
+    <path d="${d}" fill="none" stroke="#c9a66b" stroke-width="14" stroke-linecap="round"/>
+    <path id="roadDone" d="${d}" fill="none" stroke="#f0c04f" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 99999"/>
+    <path d="${d}" fill="none" stroke="#fff6dc" stroke-width="2" stroke-dasharray="3 14" stroke-linecap="round" opacity=".7"/>
+    ${nodes}
+    <g id="tok" transform="translate(${P[0][0]} ${P[0][1]})" pointer-events="none"><g class="bob"><ellipse cx="0" cy="-34" rx="14" ry="4" fill="rgba(0,0,0,.35)"/><g transform="translate(-22 -84) scale(1.1)">${tokenInner(S.avatar)}</g></g></g>
+  </svg></div></div>
+  <section class="panel passport">
+    <div class="pp-head"><h3>Pilgrim’s Passport</h3><button class="btn ghost small" id="ppBadges">View badges</button></div>
+    <div class="stamps">${STATIONS.map((s,i)=>{const st=S.stars[s.id]||0;return `<div class="stamp ${st?'on':''}">${medallion(i,46,!!st)}<span class="sl">${s.place}</span><span class="ss">${st?'★'.repeat(st)+'☆'.repeat(3-st):''}</span></div>`}).join('')}</div>
+    ${allDone?`<div class="final-cta"><button class="btn primary huge" id="sealBtn">Receive your Pilgrim’s Seal</button></div>`:''}
+  </section>
+  <div class="teacher">
+    <label><input type="checkbox" id="unlockAll" ${S.unlockAll?'checked':''}> Teacher: open all stations</label>
+    <button class="linkish" id="newPlayer">New player</button>
+  </div>`;
+  screen.querySelectorAll('.node').forEach(n=>{const go=()=>{const i=+n.dataset.i;if(unlocked(i)){sfx.tap(600);stationIntro(i)}else{tone(200,.12,'square',0,.03);n.classList.remove('shake');void n.getBBox;}};
+    n.addEventListener('click',go);n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})});
+  $('#unlockAll').onchange=e=>{S.unlockAll=e.target.checked;save();renderMap()};
+  $('#newPlayer').onclick=confirmReset;$('#ppBadges').onclick=showBadges;
+  const gn=$('#goNext');if(gn)gn.onclick=()=>stationIntro(nextI);
+  [$('#sealBtn'),$('#sealTop')].forEach(b=>b&&(b.onclick=renderSeal));
+  // place & walk the token
+  const road=$('#road'),T=road.getTotalLength(),N=500,samples=[];
+  for(let k=0;k<=N;k++){const l=T*k/N,q=road.getPointAtLength(l);samples.push([l,q.x,q.y])}
+  const L=P.map(([x,y])=>{let best=0,bd=1e12;for(const [l,px,py] of samples){const dd=(px-x)**2+(py-y)**2;if(dd<bd){bd=dd;best=l}}return best});
+  let c=0;while(c<6&&S.stars[STATIONS[c].id])c++;
+  const doneLen=c>=6?T:L[c];
+  const target=nextI>=0?nextI:5;
+  const fromI=TOK_AT==null?target:TOK_AT,fromDone=DONE_AT==null?doneLen:DONE_AT;
+  TOK_AT=target;DONE_AT=doneLen;
+  walk(road,$('#tok'),$('#roadDone'),L[fromI],L[target],fromDone,doneLen,T);
+}
+function walk(path,tok,doneEl,fromL,toL,dFrom,dTo,T){
+  const t0=performance.now(),dist=Math.max(Math.abs(toL-fromL),Math.abs(dTo-dFrom));
+  const dur=reduced()||dist<1?0:Math.min(2200,500+dist*1.6);let lastStep=0;
+  function f(t){const k=dur?Math.min(1,(t-t0)/dur):1;const e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    const q=path.getPointAtLength(fromL+(toL-fromL)*e);tok.setAttribute('transform',`translate(${q.x.toFixed(1)} ${q.y.toFixed(1)})`);
+    doneEl.setAttribute('stroke-dasharray',`${(dFrom+(dTo-dFrom)*e).toFixed(1)} ${T+10}`);
+    if(dur&&toL!==fromL&&t-lastStep>160&&k<1){sfx.step();lastStep=t}
+    if(k<1)requestAnimationFrame(f);else if(dur&&toL!==fromL){sfx.tap(880)}}
+  if(dur)setTimeout(()=>requestAnimationFrame(f),350);else f(t0);
+}
+function confirmReset(){
+  const o=overlay(`<div class="panel modal" role="dialog" aria-modal="true"><h2>New player?</h2><p>This clears the name, score, stars, and badges saved in this browser so the next student can start fresh.</p><div class="row"><button class="btn ghost" id="noR">Keep playing</button><button class="btn primary" id="yesR">Start fresh</button></div></div>`);
+  o.dataset.esc=1;o.querySelector('#noR').onclick=()=>o.remove();o.querySelector('#noR').focus();
+  o.querySelector('#yesR').onclick=()=>{o.remove();S={name:'',avatar:'fish',best:{},stars:{},badges:{},streak:0,maxLevel:0,unlockAll:S.unlockAll,sound:S.sound};TOK_AT=DONE_AT=null;save();renderTitle()};
+}
+
+/* ================= Station flow ================= */
+function stationIntro(i){
+  const s=STATIONS[i],l=s.limits;
+  const r3=l[0]===0?'no mistakes':`up to ${l[0]} mistake${l[0]>1?'s':''}`;
+  const o=overlay(`<div class="panel modal" role="dialog" aria-modal="true" aria-labelledby="it">
+    ${medallion(i,110,!!S.stars[s.id])}
+    <p class="eyebrow" style="color:var(--gold)">Station ${ROMAN[i]} · ${s.place}</p>
+    <h2 id="it">${s.title}</h2><p>${s.instr}</p>
+    <div class="rules"><span><b>★★★</b> ${r3}</span><span><b>★★</b> up to ${l[1]} mistakes</span>${S.best[s.id]?`<span>Best: <b>${S.best[s.id].toLocaleString()}</b></span>`:''}</div>
+    <div class="row"><button class="btn ghost" id="ib">Not yet</button><button class="btn primary huge" id="ig">Start!</button></div></div>`);
+  o.dataset.esc=1;o.querySelector('#ib').onclick=()=>o.remove();
+  const g=o.querySelector('#ig');g.focus();g.onclick=()=>{o.remove();startStation(i);announce('Go!');tone(523,.1);tone(784,.2,'triangle',.1)};
+}
+function startStation(i){
+  stopTimers();const s=STATIONS[i];
+  RUN={id:s.id,i,earned:0,mistakes:0,right:0,hints:0,newBadges:[]};S.streak=0;
+  screen.dataset.view='station';
+  screen.innerHTML=`
+  <section class="station">
+    <div class="st-banner">${medallion(i,84)}<div class="t">
+      <p class="eyebrow">Station ${ROMAN[i]} · ${s.place}</p><h2>${s.title}</h2><p class="instr">${s.instr}</p></div></div>
+    <div class="st-bar">
+      <div class="track" aria-hidden="true"><div class="track-fill"></div><div class="track-tok">${token(S.avatar,34)}</div>
+        <svg class="track-flag" viewBox="0 0 24 30" width="22" height="28"><path d="M4 2V28" stroke="#f6eedb" stroke-width="2.5"/><path d="M5 3H21L17 8L21 13H5Z" fill="#d4553f"/></svg></div>
+      <span class="chip miss">Mistakes <b id="missN">0</b></span>
+      <button class="btn ghost small" id="leave">Map</button>
+    </div>
+    <div class="frame"><div class="stage" id="stage"></div></div>
+  </section>`;
+  $('#leave').onclick=renderMap;hud();
+  s.run($('#stage'));
+  scrollTo({top:0,behavior:reduced()?'auto':'smooth'});
+}
+function countUp(el,to){const t0=performance.now(),dur=reduced()?0:1000;(function f(t){const k=dur?Math.min(1,(t-t0)/dur):1;el.textContent='+'+Math.round(to*(1-Math.pow(1-k,3))).toLocaleString();if(k<1)requestAnimationFrame(f)})(t0)}
+function finish(){
+  stopTimers();const s=STATIONS[RUN.i];
+  const stars=RUN.mistakes<=s.limits[0]?3:RUN.mistakes<=s.limits[1]?2:1;
+  const prevBest=S.best[s.id]||0;
+  S.stars[s.id]=Math.max(S.stars[s.id]||0,stars);S.best[s.id]=Math.max(prevBest,RUN.earned);
+  award('first');if(stars===3)award('perfect');
+  if(s.id==='vocab'&&RUN.hints===0)award('nohint');
+  if(s.id==='trial')award('gate');
+  if(STATIONS.every(x=>S.stars[x.id]))award('all');
+  if(STATIONS.every(x=>S.stars[x.id]===3))award('allstars');
+  const earned=RUN.earned,mist=RUN.mistakes,i=RUN.i,nb=RUN.newBadges.slice();RUN=null;save();hud();
+  const allDone=STATIONS.every(x=>S.stars[x.id]);
+  const o=overlay(`<div class="panel modal" role="dialog" aria-modal="true" aria-labelledby="mt">
+    <p class="eyebrow">Station ${ROMAN[i]} complete</p>
+    <h2 id="mt">${stars===3?'Flawless!':stars===2?'Well traveled!':'You made it!'}</h2>
+    <svg class="chest" id="chest" viewBox="0 0 120 100" role="button" tabindex="0" aria-label="Open the treasure chest">
+      <g class="glow"><circle cx="60" cy="46" r="44" fill="#ffe08a" opacity=".35"/><path d="M60 46L20 0M60 46L100 0M60 46L60 -10M60 46L2 30M60 46L118 30" stroke="#ffe08a" stroke-width="5" opacity=".6"/></g>
+      <rect x="14" y="46" width="92" height="46" rx="6" fill="#7a4a22" stroke="#3a220e" stroke-width="3"/>
+      <rect x="14" y="58" width="92" height="7" fill="#f0c04f"/><rect x="30" y="46" width="7" height="46" fill="#b8862a"/><rect x="83" y="46" width="7" height="46" fill="#b8862a"/>
+      <rect x="52" y="54" width="16" height="18" rx="3" fill="#f0c04f" stroke="#6e4d12" stroke-width="2"/><circle cx="60" cy="61" r="2.5" fill="#3a220e"/>
+      <g class="lid"><path d="M14 48V36C14 18 106 18 106 36V48Z" fill="#8d5629" stroke="#3a220e" stroke-width="3"/><rect x="30" y="22" width="7" height="26" fill="#b8862a"/><rect x="83" y="22" width="7" height="26" fill="#b8862a"/></g>
+    </svg>
+    <p class="tap" id="tapMsg">Tap the chest to open your reward</p>
+    <div class="reward" id="reward" hidden>
+      <div class="bigstars" aria-label="${stars} of 3 stars">${[0,1,2].map(k=>starSvg(k<stars)).join('')}</div>
+      <p class="earned" id="earnN">+0</p>
+      <p class="sub">${mist} mistake${mist===1?'':'s'}${earned<prevBest?` · your best here is still ${prevBest.toLocaleString()}`:''}</p>
+      ${nb.length?`<div class="newb">${nb.map(id=>{const b=BADGES.find(x=>x.id===id);return `<div>${badgeIcon(b,true,30)}${b.n}</div>`}).join('')}</div>`:''}
+      <p class="dyk"><b>Did you know?</b> ${s.dyk}</p>
+      <div class="row">
+        <button class="btn ghost" id="again">Replay</button>
+        ${allDone?`<button class="btn primary" id="seal">Claim your Seal</button>`:`<button class="btn primary" id="onward">Back to the map</button>`}
+      </div>
+    </div></div>`);
+  sfx.win();confetti(80);
+  const ch=o.querySelector('#chest');let opened=false;
+  const open=()=>{if(opened)return;opened=true;ch.classList.add('open');sfx.chest();burst(ch,50);confetti(140);o.querySelector('#tapMsg').hidden=true;
+    setTimeout(()=>{o.querySelector('#reward').hidden=false;countUp(o.querySelector('#earnN'),earned);[0,1,2].slice(0,stars).forEach(k=>setTimeout(()=>tone(880+k*220,.2,'triangle'),350*k+100));
+      const n=o.querySelector('#onward')||o.querySelector('#seal');n&&n.focus({preventScroll:true})},450)};
+  ch.onclick=open;ch.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}};ch.focus();
+  o.querySelector('#again').onclick=()=>{o.remove();stationIntro(i)};
+  const on=o.querySelector('#onward');if(on)on.onclick=()=>{o.remove();renderMap()};
+  const se=o.querySelector('#seal');if(se)se.onclick=()=>{o.remove();renderSeal()};
+}
+function renderSeal(){
+  stopTimers();screen.dataset.view='seal';$('#hud').hidden=false;hud();
+  const stars=STATIONS.reduce((a,s)=>a+(S.stars[s.id]||0),0),sc=totalScore();
+  screen.innerHTML=`
+  <section class="cert"><div class="cert-in">
+    <p class="orn" aria-hidden="true">❦ ✥ ❦ ✥ ❦</p>
+    <p class="eyebrow" style="color:var(--lapis-3)">Global Studies 7 · Christianity</p>
+    <h2>The Pilgrim’s Seal</h2>
+    <p>This seal is awarded to</p>
+    <p class="who">${esc(S.name||'Pilgrim')}</p>
+    <p style="max-width:34em">for traveling the whole road: where Christianity began, what Christians believe, its three major branches, its history, and its key words.</p>
+    <svg width="104" height="104" viewBox="0 0 100 100" aria-hidden="true">
+      <path d="${starPath(50,50,48,40,16)}" fill="#d4553f"/>
+      <circle cx="50" cy="50" r="36" fill="#b33f2c" stroke="#f6eedb" stroke-width="2" stroke-dasharray="3 3"/>
+      <g transform="translate(30 30)">${tokenInner(S.avatar)}</g>
+    </svg>
+    <p class="rank">${LEVELS[levelOf(sc)][1]}</p>
+    <div class="cs"><div><small>Score</small><b>${sc.toLocaleString()}</b></div><div><small>Stars</small><b>${stars} / 18</b></div><div><small>Badges</small><b>${Object.keys(S.badges).length} / ${BADGES.length}</b></div></div>
+    <div class="certbadges">${BADGES.filter(b=>S.badges[b.id]).map(b=>badgeIcon(b,true,36)).join('')}</div>
+  </div></section>
+  <div class="row" style="margin-top:24px">
+    <button class="btn ghost" id="backMap">Back to the map</button>
+    <button class="btn primary" id="improve">Replay for more stars</button>
+  </div>`;
+  $('#backMap').onclick=renderMap;
+  $('#improve').onclick=()=>{const i=STATIONS.findIndex(s=>(S.stars[s.id]||0)<3);i<0?renderMap():stationIntro(i)};
+  sfx.level();confetti(220);
+}
+
+/* ================= Games ================= */
+function explainBox(stage,ok,head,body,label,next){
+  const ex=stage.querySelector('.explain');ex.hidden=false;ex.className='explain '+(ok?'ok':'no');
+  ex.innerHTML=`<p><strong>${head}</strong> ${body}</p><button class="btn primary">${label}</button>`;
+  const b=ex.querySelector('button');b.onclick=()=>{sfx.tap(500);next()};b.focus({preventScroll:true});
+  ex.scrollIntoView({block:'nearest',behavior:reduced()?'auto':'smooth'});
+}
+function mcGame(qs,stage){
+  const order=shuffle(qs.slice());let i=0;
+  function show(){
+    const q=order[i];const opts=shuffle(q.o.map((t,k)=>({t,ok:k===0})));
+    stage.innerHTML=`<p class="qcount">Question ${i+1} of ${order.length}</p><h3 class="q">${q.q}</h3>
+      <div class="opts">${opts.map((o,k)=>`<button class="opt" data-k="${k}"><span class="let">${'ABCD'[k]}</span><span>${o.t}</span></button>`).join('')}</div><div class="explain" hidden></div>`;
+    stage.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const o=opts[+b.dataset.k];
+      stage.querySelectorAll('.opt').forEach((x,k)=>{x.disabled=true;if(opts[k].ok)x.classList.add('right');else if(x!==b)x.classList.add('dim')});
+      if(o.ok)good(b);else{b.classList.add('wrong');bad(b)}
+      explainBox(stage,o.ok,o.ok?pick(PRAISE):'Not quite.',q.e,i+1<order.length?'Next question':'Finish station',()=>{i++;i<order.length?show():finish()});
+    });
+  }
+  show();
+}
+function matchGame(stage){
+  const items=BELIEFS.map((p,i)=>({...p,i}));
+  const bs=shuffle(items.slice()),vs=shuffle(items.slice());let sb=null,sv=null,matched=0;
+  stage.innerHTML=`<div class="match">
+    <div class="col"><p class="col-h">Beliefs</p>${bs.map(b=>`<button class="mb" data-i="${b.i}"><span class="mb-t">${b.t}</span><span class="mb-d">${b.d}</span></button>`).join('')}</div>
+    <div class="col"><p class="col-h">Scripture · BSB</p>${vs.map(v=>`<button class="mv" data-i="${v.i}"><span class="ref">${v.r}</span><span class="vt">“${v.v}”</span></button>`).join('')}</div>
+  </div>`;
+  function check(){
+    if(!(sb&&sv))return;const a=sb,b=sv;sb=sv=null;
+    if(a.dataset.i===b.dataset.i){[a,b].forEach(x=>{x.classList.remove('sel');x.classList.add('locked');x.disabled=true});burst(a,14);good(b);matched++;if(matched===items.length)setTimeout(finish,800)}
+    else{[a,b].forEach(x=>x.classList.add('wrong'));bad(b);setTimeout(()=>[a,b].forEach(x=>x.classList.remove('wrong','sel')),550)}
+  }
+  stage.querySelectorAll('.mb').forEach(b=>b.onclick=()=>{if(sb)sb.classList.remove('sel');sb=b;b.classList.add('sel');sfx.tap(440);check()});
+  stage.querySelectorAll('.mv').forEach(b=>b.onclick=()=>{if(sv)sv.classList.remove('sel');sv=b;b.classList.add('sel');sfx.tap(560);check()});
+}
+const SIGN=c=>`<svg viewBox="0 0 46 46" aria-hidden="true"><path d="M23 6V42" stroke="#f6eedb" stroke-width="3"/><path d="M8 9H34L40 15L34 21H8Z" fill="${c}" stroke="#050b1f" stroke-width="1.5"/><path d="M17 42H29" stroke="#f6eedb" stroke-width="3" stroke-linecap="round"/></svg>`;
+function sortGame(stage){
+  const cards=shuffle(BRANCH_CARDS.slice());let i=0;
+  function show(){
+    const c=cards[i];
+    stage.innerHTML=`<div class="sort">
+      <div class="scard" id="scard"><p class="qcount">Card ${i+1} of ${cards.length}</p><p class="stext">${c.t}</p></div>
+      <div class="gates">${BR.map(g=>`<button class="gate g-${g.k}" data-k="${g.k}">${SIGN(g.c)}<span>${g.n}</span></button>`).join('')}</div>
+      <div class="explain" hidden></div></div>`;
+    stage.querySelectorAll('.gate').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k===c.k,name=BR.find(g=>g.k===c.k).n;
+      stage.querySelectorAll('.gate').forEach(x=>{x.disabled=true;if(x.dataset.k===c.k)x.classList.add('right');else if(x!==b)x.classList.add('dim')});
+      const card=$('#scard');card.insertAdjacentHTML('beforeend',`<span class="stampmark ${ok?'ok':'no'}">${name}</span>`);
+      if(ok)good(b);else{b.classList.add('wrong');bad(card)}
+      explainBox(stage,ok,ok?pick(PRAISE):`That card belongs on the ${name} road.`,BREX[c.k],i+1<cards.length?'Next card':'Finish station',()=>{i++;i<cards.length?show():finish()});
+    });
+  }
+  show();
+}
+function timelineGame(stage){
+  let placed=0;const sh=shuffle(EVENTS.map((e,i)=>({...e,i})));
+  stage.innerHTML=`<p class="hint-line" id="tlh">Round 1 · Tap the events from <b>earliest</b> to <b>latest</b>.</p>
+    <ol class="slots">${EVENTS.map((_,k)=>`<li class="slot" data-k="${k}"><span class="slot-n">${ROMAN[k]}</span><span class="slot-t">?</span><span class="slot-y"></span></li>`).join('')}</ol>
+    <div class="evs" id="evs">${sh.map(e=>`<button class="ev" data-i="${e.i}">${e.t}</button>`).join('')}</div>`;
+  stage.querySelectorAll('.ev').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i;
+    if(i===placed){const sl=stage.querySelector(`.slot[data-k="${i}"]`);sl.classList.add('filled');sl.querySelector('.slot-t').textContent=EVENTS[i].s;b.disabled=true;good(sl.querySelector('.slot-n'));placed++;
+      if(placed===EVENTS.length)setTimeout(yearsRound,800)}
+    else bad(b);
+  });
+  function yearsRound(){
+    let k=0;const evs=$('#evs');evs.style.display='block';
+    $('#tlh').innerHTML='Round 2 · <b>When</b> did it happen? Pick the year.';
+    announce('Round 2!');
+    function one(){
+      stage.querySelectorAll('.slot').forEach((s,j)=>s.classList.toggle('cur',j===k));
+      evs.innerHTML=`<div class="yearq"><p class="qcount">Event ${k+1} of ${EVENTS.length}</p><p class="q">${EVENTS[k].t}</p><div class="years">${shuffle(EVENTS.map(e=>e.y)).map(y=>`<button class="year">${y}</button>`).join('')}</div></div>`;
+      evs.querySelectorAll('.year').forEach(b=>b.onclick=()=>{
+        if(b.textContent===EVENTS[k].y){b.classList.add('right');stage.querySelector(`.slot[data-k="${k}"] .slot-y`).textContent=EVENTS[k].y;good(b);k++;
+          evs.querySelectorAll('.year').forEach(x=>x.disabled=true);
+          if(k<EVENTS.length)setTimeout(one,600);else{stage.querySelectorAll('.slot').forEach(s=>s.classList.remove('cur'));setTimeout(finish,800)}}
+        else{b.classList.add('wrong');b.disabled=true;bad(b)}
+      });
+    }
+    one();
+  }
+}
+function vocabGame(stage){
+  const words=shuffle(VOCAB.slice());let w=0;
+  function show(){
+    const v=words[w];let letters=v.w.split('');do{shuffle(letters)}while(letters.join('')===v.w);
+    let ans=[],hints=0,solved=false;
+    stage.innerHTML=`<div class="vocab"><p class="qcount">Word ${w+1} of ${words.length} · ${v.w.length} letters</p>
+      <p class="clue">${v.c}</p>
+      <div class="answer" id="ans">${v.w.split('').map(()=>'<span class="ab"></span>').join('')}</div>
+      <div class="tiles">${letters.map((l,k)=>`<button class="tile" data-k="${k}" aria-label="Letter ${l}">${l}</button>`).join('')}</div>
+      <div class="vctl"><button class="btn ghost small" id="undo">Undo</button><button class="btn ghost small" id="clr">Clear</button><button class="btn ghost small" id="hint">Hint</button></div>
+      <div class="explain" hidden style="justify-items:center;text-align:center"></div></div>`;
+    const tiles=[...stage.querySelectorAll('.tile')],boxes=[...stage.querySelectorAll('.ab')];
+    function draw(){boxes.forEach((b,j)=>{b.textContent=ans[j]!=null?letters[ans[j]]:'';b.classList.toggle('f',ans[j]!=null);b.classList.toggle('hinted',j<hints)});tiles.forEach((t,k)=>t.disabled=solved||ans.includes(k))}
+    function check(){
+      if(ans.length<v.w.length)return;
+      if(ans.map(k=>letters[k]).join('')===v.w){solved=true;draw();$('#ans').classList.add('win');good($('#ans'));
+        stage.querySelectorAll('.vctl button').forEach(b=>b.disabled=true);
+        explainBox(stage,true,v.w+'!',v.x,w+1<words.length?'Next word':'Finish station',()=>{w++;w<words.length?show():finish()})}
+      else{bad($('#ans'));setTimeout(()=>{ans=ans.slice(0,hints);draw()},450)}
+    }
+    tiles.forEach(t=>t.onclick=()=>{if(ans.length>=v.w.length)return;ans.push(+t.dataset.k);sfx.tap(380+ans.length*45);draw();check()});
+    $('#undo').onclick=()=>{if(ans.length>hints){ans.pop();draw()}};
+    $('#clr').onclick=()=>{ans=ans.slice(0,hints);draw()};
+    $('#hint').onclick=()=>{
+      if(hints>=v.w.length-1)return;hints++;RUN.hints++;RUN.mistakes++;$('#missN').textContent=RUN.mistakes;
+      ans=[];for(let j=0;j<hints;j++){const k=letters.findIndex((l,idx)=>l===v.w[j]&&!ans.includes(idx));ans.push(k)}
+      tone(300,.1);draw();check();
+    };
+    draw();
+  }
+  show();
+}
+function lightningGame(stage){
+  const qs=shuffle(TF.slice()).slice(0,10);let i=0,broken=0;
+  const seals=Array.from({length:10},(_,k)=>`<circle class="seal" data-s="${k}" cx="${78+k*16}" cy="96" r="6.5" fill="#d4553f" stroke="#ffe08a" stroke-width="1.5"/>`).join('');
+  stage.innerHTML=`<div class="bolt">
+    <svg class="biggate" id="gate" viewBox="0 0 300 130" aria-hidden="true">
+      <defs><clipPath id="archclip"><path d="M60 126V58C60 6 240 6 240 58V126Z"/></clipPath></defs>
+      <path d="M44 128V56C44 -8 256 -8 256 56V128Z" fill="#b8862a" stroke="#f0c04f" stroke-width="3"/>
+      <g clip-path="url(#archclip)"><rect x="60" y="0" width="180" height="130" fill="#ffe08a"/><path d="M150 130L100 20M150 130L200 20M150 130L150 10" stroke="#fff6dc" stroke-width="10" opacity=".6"/>
+        <rect class="door-l" x="60" y="0" width="90" height="130" fill="#22396e" stroke="#0a1430" stroke-width="2"/>
+        <rect class="door-r" x="150" y="0" width="90" height="130" fill="#22396e" stroke="#0a1430" stroke-width="2"/></g>
+      <path d="M150 20V126" stroke="#0a1430" stroke-width="2"/>
+      <g id="seals">${seals}</g>
+      <path d="M30 128H270" stroke="#f0c04f" stroke-width="4"/>
+    </svg>
+    <p class="hp">Seals remaining: <b id="hpN">10</b></p>
+    <div id="tq" style="display:grid;gap:16px;justify-items:center;width:100%"></div></div>`;
+  const tq=$('#tq');
+  function show(){
+    stopTimers();const q=qs[i];
+    tq.innerHTML=`<p class="qcount">Statement ${i+1} of ${qs.length}</p>
+      <div class="timer" id="tm" aria-hidden="true"><span></span></div>
+      <p class="stmt">${q.s}</p>
+      <div class="tf"><button class="btn tfb t" data-v="1">True</button><button class="btn tfb f" data-v="0">False</button></div>
+      <div class="explain" hidden style="justify-items:center;text-align:center;width:100%;box-sizing:border-box"></div>`;
+    const tm=$('#tm'),bar=tm.querySelector('span'),t0=performance.now(),dur=10000;let frac=1,doneQ=false,lastSec=10;
+    const iv=setInterval(()=>{frac=Math.max(0,1-(performance.now()-t0)/dur);bar.style.transform=`scaleX(${frac})`;
+      const sec=Math.ceil(frac*10);if(sec<lastSec){lastSec=sec;if(sec<=3&&sec>0){sfx.tick();tm.classList.add('low')}}
+      if(frac<=0)answer(null,null)},50);TIMERS.push(iv);
+    function answer(v,btn){
+      if(doneQ)return;doneQ=true;stopTimers();
+      tq.querySelectorAll('.tfb').forEach(b=>{b.disabled=true;if((b.dataset.v==='1')===q.a)b.classList.add('right');else b.classList.add('dim')});
+      const ok=v===q.a,g=$('#gate');
+      if(ok){const el=performance.now()-t0;if(el<2000)award('speed');
+        const sl=g.querySelector(`.seal[data-s="${broken}"]`);if(sl){sl.classList.add('broken');burst(sl,18)}broken++;
+        $('#hpN').textContent=10-broken;good(btn,Math.round(frac*100))}
+      else{bad(btn||tq.querySelector('.stmt'));g.classList.remove('hit');void g.getBoundingClientRect();g.classList.add('hit')}
+      const last=i+1>=qs.length;
+      explainBox(tq,ok,ok?pick(PRAISE):v===null?'Time’s up!':'Not quite.',`${q.a?'True.':'False.'} ${q.e}`,last?'Open the Great Gate':'Next statement',()=>{
+        i++;if(i<qs.length)return show();
+        g.querySelectorAll('.seal').forEach(s=>s.classList.add('broken'));$('#hpN').textContent=0;
+        tq.innerHTML='';g.classList.add('open');sfx.level();confetti(120);announce('The gate opens!');setTimeout(finish,1500)});
+    }
+    tq.querySelectorAll('.tfb').forEach(b=>b.onclick=()=>answer(b.dataset.v==='1',b));
+  }
+  show();
+}
+
+/* ================= Boot ================= */
+$('#toMap').onclick=()=>{if(screen.dataset.view!=='map')renderMap()};
+$('#soundBtn').onclick=()=>{S.sound=!S.sound;save();hud();tone(660,.08)};
+$('#badgeBtn').onclick=showBadges;
+drawBg();fxSize();
+S.name?renderMap():renderTitle();
+</script>
+
+</body></html>
