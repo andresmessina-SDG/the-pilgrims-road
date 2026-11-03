@@ -8,9 +8,10 @@ Great Gate. Live at <https://andresmessina-sdg.github.io/the-pilgrims-road/>.
 If `index.html` is replaced with a new version from its artifact, run:
 
 ```bash
-python3 tools/localize-fonts.py
+python3 tools/localize.py
 ```
 
 It swaps the Google Fonts link for `fonts/fonts.css`, downloading any font the
-new page needs into `fonts/`. Players' browsers then ask no other site for the
-fonts. Commit `index.html` and anything new in `fonts/` together.
+new page needs into `fonts/`, and copies any image the page loads from another
+site into `images/`. Players' browsers then load the game entirely from this
+site. Commit `index.html` with anything new in `fonts/` and `images/`.
